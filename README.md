@@ -1,2 +1,2 @@
 # El-Pollo-Loco
-Developer Akademy - Modul 11
+Developer Akademie - Modul 11
