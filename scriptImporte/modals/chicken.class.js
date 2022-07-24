@@ -3,11 +3,12 @@ class Chicken extends MovableObjekt {
     width = 248 * scalefactor;
 
     x = 200 + Math.random() * 500;
-    chickenWalkline =  this.characterWalkline - 15 + this.characterWalkline;
-    y = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor)
+    chickenWalkline = this.characterWalkline - 15 + this.characterWalkline;
+    gravityY = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor);
+    y = this.gravityY;
 
     minSpeed = 0.5;
-    maxSpeed = 1.8;
+    maxSpeed = 2.8;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
 
     IMAGES_WALKING = [
@@ -19,22 +20,19 @@ class Chicken extends MovableObjekt {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png')
         this.loadImages(this.IMAGES_WALKING)
-        this.animateMoving()
         this.moving()
     }
 
 
-    moving() {
-        this.moveleft()
-    }
+   moving() {
+       //setInterval(() => {
+       //    this.playAnimation(this.IMAGES_WALKING)
+       //}, 100)
+       //setInterval(() => {
+       //    this.moveLeft()
+       //},1000 / 60)
+   }
 
 
-    animateMoving() {
-        setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 100)
-    }
+
 }

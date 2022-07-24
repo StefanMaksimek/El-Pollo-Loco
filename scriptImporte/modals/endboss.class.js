@@ -2,9 +2,9 @@ class Endboss extends MovableObjekt{
     height = 1217 * scalefactor;
     width = 1045 * scalefactor;
 
-    x = 200 + Math.random() * 500;
     endbossWalkline = this.characterWalkline - 39 + this.characterWalkline;;
-    y = canvasHeight - this.height - ((this.walkLine + this.endbossWalkline) * scalefactor)
+    gravityY = canvasHeight - this.height - ((this.walkLine + this.endbossWalkline) * scalefactor);
+    y = this.gravityY;
 
     minSpeed = 0.5;
     maxSpeed = 1.8;
@@ -47,24 +47,20 @@ class Endboss extends MovableObjekt{
     ]
 
     constructor() {
-        super().loadImage('img/4_enemie_boss_chicken/1_walk/G1.png')
+        super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)
-        this.animateMoving()
+
+        this.x = canvasWidth // <-- ersetzen durch = this.bgCounter * canvasWidth
         this.moving()
     }
 
 
     moving() {
-        this.moveleft()
-    }
-
-
-    animateMoving() {
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_WALKING)
         }, 100)
+        setInterval(() => {
+            this.moveLeft()
+        },1000 / 60)
     }
 }

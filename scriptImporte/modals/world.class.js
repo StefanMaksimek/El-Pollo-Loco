@@ -3,19 +3,39 @@ class World {
     canvas;
     keyboard;
 
+    moveableObjekt;
     character;
+    chicken;
+    endboss;
     level;
+    bgCounter;
     cameraX;
 
     constructor(canvas, keyboard) {
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.moveableObjekt = new MovableObjekt();
         this.character = new Character();
+        this.chicken = new Chicken();
+        this.endboss = new Endboss();
         this.level = level1
         this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.createBackgrounds()
+        this.checkCollisions()
+    }
+
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach(enemy => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.energy -= 0.1
+                    console.log(this.character.energy)
+                } 
+            })
+        }, 1000 / 60);
     }
 
 
@@ -29,7 +49,6 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMapp(this.character);
-
         this.ctx.translate(-this.cameraX, 0)
 
         let self = this;
@@ -47,12 +66,25 @@ class World {
                 imageCounter = 1
             }
             this.setBackgroundParts(i, imageCounter);
-            this.setClouds(i, imageCounter);
             this.setEnemies();
-            this.character.bgCounter = i;
+            this.bgCounter = i;
+            this.moveableObjekt.bgCounter = i;
         }
+        this.createClouds()
 
-    this.setEndboss();
+        this.setEndboss();
+    }
+
+
+    createClouds() {
+        let imageCounter = 0;
+        for (let i = -2; i < 16; i++) {
+            imageCounter++;
+            if (imageCounter == 3) {
+                imageCounter = 1
+            }
+            this.setClouds(i, imageCounter);
+        }
     }
 
 
@@ -76,9 +108,9 @@ class World {
 
     setEnemies() {
         this.level.enemies.push(
-            new Chicken(),
-            new Chicken(),
-            new Chicken(),
+           new Chicken(),
+           new Chicken(),
+           new Chicken(),
         )
     }
 
@@ -91,16 +123,27 @@ class World {
 
     addToMapp(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * -1
+            this.flipImage(mo)
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.draw(this.ctx)
+        mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(mo)
         }
+    }
+
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1
+    }
+
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 
 
@@ -113,4 +156,8 @@ class World {
     setWorld() {
         this.character.world = this;
     }
+
+
+    
+   
 }
