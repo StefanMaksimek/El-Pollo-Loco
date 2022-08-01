@@ -6,6 +6,8 @@ let canvasWidth = canvasHeight / 9 * 16; // will set in relation to the canvasHe
 let sizeVariable = 2; // Resizing of characters and items
 let scalefactor = 1 / originalHeight * canvasHeight / sizeVariable; // Resizing of all objects related to the game window to the original image height
 
+let FPS = 60
+let intervall = 1000 / FPS
 /**
      * generate random number; use 0.1 to 3
      * but you can use 0 to infinite ( however, that makes no sense)

@@ -7,9 +7,16 @@ class Chicken extends MovableObjekt {
     gravityY = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor);
     y = this.gravityY;
 
+    setCollisionX = 0 * scalefactor;
+    setCollisionY = 10 * scalefactor;
+    setCollisionWidth = 0 * scalefactor;
+    setCollisionheigt = 40 * scalefactor;
+
     minSpeed = 0.5;
     maxSpeed = 2.8;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
+
+    damage = 5;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -25,14 +32,11 @@ class Chicken extends MovableObjekt {
 
 
    moving() {
-       //setInterval(() => {
-       //    this.playAnimation(this.IMAGES_WALKING)
-       //}, 100)
-       //setInterval(() => {
-       //    this.moveLeft()
-       //},1000 / 60)
+       setInterval(() => {
+           this.playAnimation(this.IMAGES_WALKING)
+       }, 100)
+       setInterval(() => {
+           this.moveLeft()
+       },1000 / 60)
    }
-
-
-
 }

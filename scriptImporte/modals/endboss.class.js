@@ -6,9 +6,16 @@ class Endboss extends MovableObjekt{
     gravityY = canvasHeight - this.height - ((this.walkLine + this.endbossWalkline) * scalefactor);
     y = this.gravityY;
 
+    setCollisionX = 100 * scalefactor;
+    setCollisionY = 200 * scalefactor;
+    setCollisionWidth = 200 * scalefactor;
+    setCollisionheigt = 250 * scalefactor;
+
     minSpeed = 0.5;
     maxSpeed = 1.8;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
+
+    damage = 20;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -50,7 +57,7 @@ class Endboss extends MovableObjekt{
         super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)
 
-        this.x = canvasWidth // <-- ersetzen durch = this.bgCounter * canvasWidth
+        this.x = 600 // <-- ersetzen durch = this.bgCounter * canvasWidth
         this.moving()
     }
 
@@ -59,8 +66,8 @@ class Endboss extends MovableObjekt{
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING)
         }, 100)
-        setInterval(() => {
-            this.moveLeft()
-        },1000 / 60)
+        //setInterval(() => {
+        //    this.moveLeft()
+        //},1000 / 60)
     }
 }

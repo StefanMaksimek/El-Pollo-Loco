@@ -1,7 +1,17 @@
+/* boogaloo-regular - latin */
+@font-face {
+    font-family: 'Boogaloo';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../img/7_statusbars/3_icons/Boogaloo/Boogaloo-Regular.ttf'); 
+}
+
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Boogaloo';
 }
 
 canvas {

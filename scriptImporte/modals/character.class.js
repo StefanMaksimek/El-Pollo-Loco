@@ -8,9 +8,15 @@ class Character extends MovableObjekt {
     gravityY = canvasHeight - this.height - ((this.walkLine + this.characterWalkline) * scalefactor);
     y = this.gravityY
 
+    setCollisionX = 100 * scalefactor;
+    setCollisionY = 500 * scalefactor;
+    setCollisionWidth = 200 * scalefactor;
+    setCollisionheigt = 550 * scalefactor;
+
     bgCounter = this.bgCounter
-    animationSpeed = 15;
     otherDirection = false;
+    animationSpeed = 15;
+    idleCounter = 0
 
 
     IMAGES_WALKING = [
@@ -74,14 +80,30 @@ class Character extends MovableObjekt {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        this.loadAllImages();
+        this.animate();
+        this.applyGravity(this.gravityY)
+
+    }
+
+
+    loadAllImages() {
         this.loadImages(this.IMAGES_WALKING)
         this.loadImages(this.IMAGES_JUMP)
-        this.animate()
-        this.applyGravity(this.gravityY)
+        this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_DEAD)
+        this.loadImages(this.IMAGES_IDLE)
+        this.loadImages(this.IMAGES_LONG_IDLE)
     }
 
 
     animate() {
+        this.setMove()
+        this.setImages()
+    }
+
+
+    setMove() {
         setInterval(() => {
             if (keyboard.right && this.proofCanvasEndRight()) {
                 this.moveRight()
@@ -95,18 +117,59 @@ class Character extends MovableObjekt {
                 this.jump()
             }
             this.cameraView()
-        }, 1000 / 60)
+        }, intervall)
+    }
 
+
+    setImages() {
+        this.currentImage = 0
         setInterval(() => {
-            if (this.isAboveGround(this.gravityY)) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD)
+            } else if (this.colliding) {
+                this.setCollidingTime();
+                this.setCollidingX();
+                this.hitAnimation();
+                this.idleCounter = 0
+            } else if (this.isAboveGround(this.gravityY)) {
                 this.playAnimation(this.IMAGES_JUMP)
+                this.idleCounter = 0
+            } else if (keyboard.left || keyboard.right) {
+                this.playAnimation(this.IMAGES_WALKING)
+                this.idleCounter = 0
             } else {
-                if (keyboard.left || keyboard.right) {
-                    this.playAnimation(this.IMAGES_WALKING)
+                if (this.idleCounter > 10) {
+                    this.playAnimation(this.IMAGES_LONG_IDLE)
+                } else {
+                    this.playAnimation(this.IMAGES_IDLE)
+                    this.idleCounter += 0.5
                 }
             }
-        }, 50)
+        }, 150)
     }
+
+
+    isDead() {
+        return this.characterEnergy == 0
+    }
+
+
+    
+
+
+    setCollidingX() {
+        this.speedX = 0
+        this.collidingX = this.x;
+        this.lastHit = new Date().getTime()
+        this.colliding = false;
+    }
+
+
+    hitAnimation() {
+        
+        this.applyCollidingMove()
+    }
+
 
     proofCanvasEndRight() {
         return this.x < this.bgCounter * canvasWidth - this.width
@@ -127,6 +190,4 @@ class Character extends MovableObjekt {
         }
     }
 
-
-    
 }
