@@ -17,7 +17,6 @@ class MovableObjekt extends DrawableObject{
     applyCollidingMove() {
         setInterval(() => {
             if (this.setCollidingTime()) {
-                this.hitAnimation();
                 this.x -= this.speedX;
                 this.playAnimation(this.IMAGES_HURT)
                 this.speedX += this.accceleration;

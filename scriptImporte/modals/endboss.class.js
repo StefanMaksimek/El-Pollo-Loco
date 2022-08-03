@@ -2,7 +2,7 @@ class Endboss extends MovableObjekt{
     height = 1217 * scalefactor;
     width = 1045 * scalefactor;
 
-    endbossWalkline = this.characterWalkline - 39 + this.characterWalkline;;
+    endbossWalkline = this.characterWalkline - 39 + this.characterWalkline;
     gravityY = canvasHeight - this.height - ((this.walkLine + this.endbossWalkline) * scalefactor);
     y = this.gravityY;
 

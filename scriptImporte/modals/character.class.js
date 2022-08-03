@@ -129,7 +129,7 @@ class Character extends MovableObjekt {
             } else if (this.colliding) {
                 this.setCollidingTime();
                 this.setCollidingX();
-                this.hitAnimation();
+                this.applyCollidingMove()
                 this.idleCounter = 0
             } else if (this.isAboveGround(this.gravityY)) {
                 this.playAnimation(this.IMAGES_JUMP)
@@ -152,22 +152,13 @@ class Character extends MovableObjekt {
     isDead() {
         return this.characterEnergy == 0
     }
-
-
     
-
 
     setCollidingX() {
         this.speedX = 0
         this.collidingX = this.x;
         this.lastHit = new Date().getTime()
         this.colliding = false;
-    }
-
-
-    hitAnimation() {
-        
-        this.applyCollidingMove()
     }
 
 
