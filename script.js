@@ -30,6 +30,9 @@ window.addEventListener('keydown', e => {
     if (e.key == 'Shift' ) {
         keyboard.shift = true;
     }
+    if (e.key == 'd' ) {
+        keyboard.d = true;
+    }
 }) 
 
 
@@ -45,5 +48,8 @@ window.addEventListener('keyup', e => {
     }
     if (e.key == 'Shift' ) {
         keyboard.shift = false;
+    }
+    if (e.key == 'd' ) {
+        keyboard.d = false;
     }
 }) 

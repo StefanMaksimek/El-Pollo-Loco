@@ -2,6 +2,10 @@ class DrawableObject {
     height = 100;
     width = 100;
 
+    bgCounter = 4;
+    leftEnd = 2 * - canvasWidth + 200;
+    rightEnd = this.bgCounter * canvasWidth - 400;
+
     
     x = 0;
     y = this.canvasHeight - this.height - this.walkLine;
@@ -13,7 +17,6 @@ class DrawableObject {
     img;
     imageCache = [];
     currentImage = 0;
-    bgCounter = 4;
 
 
     loadImage(path) {
@@ -41,13 +44,13 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-            ctx.beginPath();
+        /***/ ctx.beginPath();
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.lineWidth = 3;
             ctx.strokeStyle = 'black';
             ctx.stroke();
         
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof Coin || this instanceof Bottle) {
             ctx.beginPath();
             ctx.rect(this.x + this.setCollisionX, this.y + this.setCollisionY, this.width - this.setCollisionWidth, this.height - this.setCollisionheigt);
             ctx.lineWidth = 2;
@@ -55,4 +58,56 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+
+    isColliding(mo) {
+        let enemyYtop = mo.y + mo.setCollisionY;
+        let enemyYbottom = mo.y + mo.setCollisionY + mo.height - mo.setCollisionheigt;
+        let enemyXleft = mo.x + mo.setCollisionX;
+        let enemyXright = mo.x + mo.setCollisionX + mo.width - mo.setCollisionWidth;
+
+        let characterYtop = this.y + this.setCollisionY;
+        let characterYbottom = this.y + this.setCollisionY + this.height - this.setCollisionheigt;
+        let characterXleft = this.x + this.setCollisionX;
+        let characterXright = this.x + this.setCollisionX + this.width - this.setCollisionWidth;
+
+        return characterXright > enemyXleft &&
+        characterXright < enemyXright &&
+        characterYbottom > enemyYtop &&
+        characterYbottom < enemyYbottom
+        ||
+        characterXright > enemyXleft &&
+        characterXright < enemyXright &&
+        characterYtop > enemyYtop &&
+        characterYtop < enemyYbottom
+        ||
+        characterXleft > enemyXleft &&
+        characterXleft < enemyXright &&
+        characterYtop > enemyYtop &&
+        characterYtop < enemyYbottom
+        ||
+        characterXleft > enemyXleft &&
+        characterXleft < enemyXright &&
+        characterYbottom > enemyYtop &&
+        characterYbottom < enemyYbottom
+        ||
+        enemyYtop > characterYtop &&
+        enemyYbottom < characterYbottom &&
+        enemyXleft > characterXleft &&
+        enemyXleft < characterXright
+        ||
+        enemyYtop > characterYtop &&
+        enemyYbottom < characterYbottom &&
+        enemyXright > characterXleft &&
+        enemyXright < characterXright
+    }
+
+    /** Is not working!!!
+     * 
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+        this.y +this.height > mo.y &&
+        this.x < mo.x + mo.with &&
+        this.y > mo.y + mo.height
+    } */
 }

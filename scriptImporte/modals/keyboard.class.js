@@ -3,5 +3,5 @@ class Keyboard {
     left = false;
     space = false;
     shift = false;
-
+    d = false;
 }

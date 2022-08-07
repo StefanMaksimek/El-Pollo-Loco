@@ -2,9 +2,3 @@
 @import "./css-importe/variable.css";
 @import "./css-importe/main-style.css";
 @import "./css-importe/media.css";
-
-
-#a {
-    display: none;
-    color: red;
-}

@@ -7,18 +7,33 @@ class BottleBar extends DrawableObject{
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
     ];
+    IMAGE_BOTTLE = [
+        'img/7_statusbars/3_icons/icon_salsa_bottle.png'
+    ]
 
-    width = 595 * scalefactor;
+
+    /**
+     * only for status Bar
+     * width = 595 * scalefactor;
+     * height = 158 * scalefactor;
+     */
+    
+
+    width = 158 * scalefactor;
     height = 158 * scalefactor;
     x = 10;
     y = 2 * this.height + 10;
 
+    bottles = 0;
+
 
     constructor() {
+        super().loadImage(this.IMAGE_BOTTLE)
+        /** 
         super().loadImage(this.IMAGES_Bottle[0])
         this.loadImages(this.IMAGES_Bottle);
         this.setBottleBar(0);
-        
+        */
 
     }
 

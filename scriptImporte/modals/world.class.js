@@ -1,9 +1,12 @@
 class World {
+    deebugmode = false
+
     ctx;
     canvas;
     keyboard;
 
-    moveableObjekt;
+    moveableObject;
+    throwableObject;
     character;
     chicken;
     barbedWire;
@@ -11,6 +14,7 @@ class World {
     level;
     bgCounter;
     cameraX;
+    lastThrow;
 
     constructor(canvas, keyboard) {
         this.canvas = canvas;
@@ -21,12 +25,13 @@ class World {
         this.draw();
         this.setWorld();
         this.createBackgrounds()
-        this.checkCollisions()
+        this.run()
     }
 
 
     setObjects() {
-        this.moveableObjekt = new MovableObjekt();
+        this.moveableObject = new MovableObjekt();
+        this.throwableObject = [];
         this.drawableObject = new DrawableObject();
         this.character = new Character();
         this.chicken = new Chicken();
@@ -35,20 +40,96 @@ class World {
         this.healthBar = new HealthBar();
         this.coinBar = new CoinBar();
         this.bottleBar = new BottleBar();
+        this.coins = [];
+        this.bottles = [];
     }
 
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach(enemy => {
-                if (this.character.isColliding(enemy) /*&& this.character.energy > 0*/) {
-                    this.drawableObject.characterEnergy -= enemy.damage
-                    console.log('Damage', enemy.damage)
-                    this.healthBar.setHealthBar(this.drawableObject.characterEnergy)
-                    this.character.colliding = this.character.isColliding(enemy)
+            this.pepeColliding();
+            this.enemyCollidingPepe();
+            this.checkThrowing()
+            this.throwingBottleColliding();
+            this.coinColliding();
+            this.bottleColliding()
+        }, 20);
+    }
+
+
+    checkThrowing() {
+        if (this.keyboard.d && !this.prooflastThrow(1001) && this.bottleBar.bottles > 0) {
+            let bottle = new ThrowableObject(this.character.x + this.character.width * 0.5, this.character.y + this.character.height * 0.5, this.character.otherDirection, this.keyboard.left, this.keyboard.right)
+            this.throwableObject.push(bottle)
+            this.lastThrow = new Date().getTime()
+            this.character.idleCounter = 0
+            this.bottleBar.bottles--
+        }
+        if (!this.prooflastThrow(1000)) {
+            this.throwableObject.splice(0, 1)
+        }
+    }
+
+
+    prooflastThrow(ms) {
+        let timepassed = new Date().getTime() - this.lastThrow
+        return timepassed < ms
+    }
+
+
+    pepeColliding() {
+        this.level.enemies.forEach(enemy => {
+            if (this.character.isColliding(enemy) && this.character.y < this.character.gravityY && enemy instanceof Chicken && !this.character.proofCollidingTime()) {
+                console.log('success')
+                enemy.energy = 0
+                this.character.speedY = 20
+            } else if (this.character.isColliding(enemy) && !this.character.proofCollidingTime() && !enemy.isDead) {
+                this.drawableObject.characterEnergy -= enemy.damage
+                this.character.energy = this.drawableObject.characterEnergy
+                this.healthBar.setHealthBar(this.drawableObject.characterEnergy)
+                this.character.colliding = this.character.isColliding(enemy)
+            }
+        })
+    }
+
+
+    enemyCollidingPepe() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy.isColliding(this.character) && !this.character.proofCollidingTime() || enemy.x < 2 * - canvasWidth + 500 || enemy.x > this.bgCounter * canvasWidth + 400) {
+                enemy.directionIndex++
+            }
+        })
+    }
+
+
+    throwingBottleColliding() {
+        if (this.throwableObject.length > 0) {
+            this.level.enemies.forEach(e => {
+                if (e.isColliding(this.throwableObject[0])) {
+                    e.energy -= 4
                 }
             })
-        }, 1);
+        }
+    }
+
+
+    coinColliding() {
+        this.coins.forEach( (coin, i) => {
+            if (coin.isColliding(this.character)) {
+                this.coins.splice(i, 1)
+                this.coinBar.coins++
+            }
+        })
+    }
+
+
+    bottleColliding() {
+        this.bottles.forEach( (bottle, i) => {
+            if (bottle.isColliding(this.character)) {
+                this.bottles.splice(i, 1)
+                this.bottleBar.bottles++
+            }
+        })
     }
 
 
@@ -60,18 +141,33 @@ class World {
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObject);
+
+        this.addObjectsToMap(this.coins);
+        this.addObjectsToMap(this.bottles);
 
         this.addToMapp(this.character);
         this.ctx.translate(-this.cameraX, 0)
 
         this.addToMapp(this.healthBar);
         this.addToMapp(this.coinBar);
+        
         this.addToMapp(this.bottleBar);
+
+        this.numberOfcollectedItems()
 
         let self = this;
         requestAnimationFrame(() => {
             self.draw();
         });
+    }
+
+
+    numberOfcollectedItems() {
+        this.ctx.font = '25px Boogaloo';
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText(this.coinBar.coins, this.coinBar.width + this.coinBar.x, this.coinBar.y + 25);
+        this.ctx.fillText(this.bottleBar.bottles, this.bottleBar.width + this.bottleBar.x, this.bottleBar.y + 25);
     }
 
 
@@ -85,11 +181,13 @@ class World {
             this.setBackgroundParts(i, imageCounter);
             this.setEnemies();
             this.bgCounter = i;
-            this.moveableObjekt.bgCounter = i;
+            this.moveableObject.bgCounter = i;
         }
-        this.createClouds()
-        this.setObstacles()
+        this.createClouds();
+        this.setObstacles();
         this.setEndboss();
+        this.setCoins();
+        this.setBottles();
     }
 
 
@@ -125,7 +223,7 @@ class World {
 
     setEnemies() {
         this.level.enemies.push(
-            //new Chicken(),
+            new Chicken(),
         )
     }
 
@@ -135,20 +233,68 @@ class World {
             new BarbedWire(this.barbedWire.leftEnd, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.leftEnd + 80, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.leftEnd + 160, this.barbedWire.bottom),
-
             new BarbedWire(this.barbedWire.leftEnd + 40, this.barbedWire.bottom - 60),
             new BarbedWire(this.barbedWire.leftEnd + 120, this.barbedWire.bottom - 60),
-
             new BarbedWire(this.barbedWire.leftEnd + 80, this.barbedWire.bottom - 120),
 
             new BarbedWire(this.barbedWire.rightEnd, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.rightEnd + 80, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.rightEnd + 160, this.barbedWire.bottom),
-
             new BarbedWire(this.barbedWire.rightEnd + 40, this.barbedWire.bottom - 60),
             new BarbedWire(this.barbedWire.rightEnd + 120, this.barbedWire.bottom - 60),
-
             new BarbedWire(this.barbedWire.rightEnd + 80, this.barbedWire.bottom - 120),
+        )
+    }
+
+
+    setCoins() {
+        this.coins.push(
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+            new Coin(),
+        )
+    }
+
+
+    setBottles() {
+        this.bottles.push(
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
+            new Bottle(),
         )
     }
 
@@ -167,7 +313,9 @@ class World {
             this.flipImage(mo)
         }
         mo.draw(this.ctx)
-        mo.drawFrame(this.ctx);
+        if (this.deebugmode) {
+            mo.drawFrame(this.ctx);
+        }
         if (mo.otherDirection) {
             this.flipImageBack(mo)
         }
@@ -194,8 +342,10 @@ class World {
         })
     }
 
+
     setWorld() {
         this.character.world = this;
+        this.throwableObject.world = this;
     }
 
 

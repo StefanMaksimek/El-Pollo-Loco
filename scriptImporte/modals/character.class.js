@@ -3,6 +3,8 @@ class Character extends MovableObjekt {
     width = 610 * scalefactor;
     world;
 
+    energy = this.characterEnergy
+
     first_positionOfCharacter = canvasWidth / 4;
     x = this.first_positionOfCharacter;
     gravityY = canvasHeight - this.height - ((this.walkLine + this.characterWalkline) * scalefactor);
@@ -15,7 +17,7 @@ class Character extends MovableObjekt {
 
     bgCounter = this.bgCounter
     otherDirection = false;
-    animationSpeed = 15;
+    animationSpeed = 10;
     idleCounter = 0
 
 
@@ -83,7 +85,6 @@ class Character extends MovableObjekt {
         this.loadAllImages();
         this.animate();
         this.applyGravity(this.gravityY)
-
     }
 
 
@@ -98,6 +99,7 @@ class Character extends MovableObjekt {
 
 
     animate() {
+        this.proofAlive()
         this.setMove()
         this.setImages()
     }
@@ -122,13 +124,16 @@ class Character extends MovableObjekt {
 
 
     setImages() {
-        this.currentImage = 0
         setInterval(() => {
-            if (this.isDead()) {
+            if (this.isDead) {
                 this.playAnimation(this.IMAGES_DEAD)
+                if (!this.proofCollidingTime()) {
+                    this.y -= 30
+                } else {
+                this.y += 5
+                }
             } else if (this.colliding) {
                 this.setCollidingTime();
-                this.setCollidingX();
                 this.applyCollidingMove()
                 this.idleCounter = 0
             } else if (this.isAboveGround(this.gravityY)) {
@@ -145,18 +150,11 @@ class Character extends MovableObjekt {
                     this.idleCounter += 0.5
                 }
             }
-        }, 150)
+        }, 100)
     }
 
 
-    isDead() {
-        return this.characterEnergy == 0
-    }
-    
-
-    setCollidingX() {
-        this.speedX = 0
-        this.collidingX = this.x;
+    setCollidingTime() {
         this.lastHit = new Date().getTime()
         this.colliding = false;
     }
