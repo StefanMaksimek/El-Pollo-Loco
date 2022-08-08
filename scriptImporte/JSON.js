@@ -1,6 +1,6 @@
 const originalHeight = 1080; // Original size of BackgroundImage
 
-let canvasHeight = 1080; // Game window height
+let canvasHeight = 480; // Game window height
 let canvasWidth = canvasHeight / 9 * 16; // will set in relation to the canvasHeight
 
 let sizeVariable = 2; // Resizing of characters and items
