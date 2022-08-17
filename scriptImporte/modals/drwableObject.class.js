@@ -44,7 +44,7 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-        /***/ ctx.beginPath();
+            ctx.beginPath();
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.lineWidth = 3;
             ctx.strokeStyle = 'black';

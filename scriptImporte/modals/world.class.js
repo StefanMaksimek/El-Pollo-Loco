@@ -38,6 +38,7 @@ class World {
         this.endboss = new Endboss();
         this.barbedWire = new BarbedWire()
         this.healthBar = new HealthBar();
+        this.endbossHealthBar = new EndbossHealthBar();
         this.coinBar = new CoinBar();
         this.bottleBar = new BottleBar();
         this.coins = [];
@@ -107,6 +108,10 @@ class World {
             this.level.enemies.forEach(e => {
                 if (e.isColliding(this.throwableObject[0])) {
                     e.energy -= 4
+                    this.throwableObject[0].hit = true
+                    if (e instanceof Endboss) {
+                        this.endbossHealthBar.setHealthBar(e.energy)
+                    }
                 }
             })
         }
@@ -150,6 +155,7 @@ class World {
         this.ctx.translate(-this.cameraX, 0)
 
         this.addToMapp(this.healthBar);
+        this.addToMapp(this.endbossHealthBar);
         this.addToMapp(this.coinBar);
         
         this.addToMapp(this.bottleBar);
@@ -184,7 +190,7 @@ class World {
             this.moveableObject.bgCounter = i;
         }
         this.createClouds();
-        this.setObstacles();
+        //this.setObstacles();
         this.setEndboss();
         this.setCoins();
         this.setBottles();
