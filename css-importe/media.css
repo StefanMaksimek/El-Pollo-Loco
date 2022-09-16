@@ -1,0 +1,41 @@
+@media screen and (max-width: 1200px) {
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box {
+        display: flex;
+    }
+
+    .box1 {
+        display: flex;
+    }
+
+    h1 {
+        font-size: 4rem;
+    }
+}
+
+
+@media screen and (max-width: 680px) {
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+
+@media screen and (max-width: 380px) {
+    .box {
+        padding: 0;
+    }
+}

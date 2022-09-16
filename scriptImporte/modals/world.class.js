@@ -185,13 +185,13 @@ class World {
                 imageCounter = 1
             }
             this.setBackgroundParts(i, imageCounter);
-            this.setEnemies();
+            //this.setEnemies();
             this.bgCounter = i;
             this.moveableObject.bgCounter = i;
         }
         this.createClouds();
         //this.setObstacles();
-        this.setEndboss();
+        //this.setEndboss();
         this.setCoins();
         this.setBottles();
     }

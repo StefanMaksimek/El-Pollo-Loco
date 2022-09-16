@@ -17,7 +17,7 @@
     <script src="./scriptImporte/HTML.js"></script>
     <script src="./scriptImporte/modals/keyboard.class.js"></script>
 
-    
+
     <script src="./scriptImporte/modals/drwableObject.class.js"></script>
     <script src="./scriptImporte/modals/healthBar.class.js"></script>
     <script src="./scriptImporte/modals/enbossHealthBar.class.js"></script>
@@ -34,24 +34,79 @@
     <script src="./scriptImporte/modals/character.class.js"></script>
     <script src="./scriptImporte/modals/chicken.class.js"></script>
     <script src="./scriptImporte/modals/endboss.class.js"></script>
-    
+
     <script src="./scriptImporte/modals/level.class.js"></script>
     <script src="./scriptImporte/levels/level1.js"></script>
 
-    
+
     <script src="./scriptImporte/modals/world.class.js"></script>
-    
-    <script src="./script.js"></script>
 
     
-    
+
+
+
 </head>
 
 <body onload="init()">
-    <h1>El Pollo Loco</h1>
-    <canvas width="" height="" id="canvas">
 
-    </canvas>
+    <div class="content">
+        <div class="info">
+            <div class="box">
+                <div class="box1">
+                    <ul>
+                        <li class="li-right">Nach Rechts</li>
+                        <li class="li-left">Nach Links</li>
+    
+                    </ul>
+    
+                    <ul>
+                        <li class="li-jump">Springen</li>
+                        <li class="li-throw">Werfen</li>
+                    </ul>
+                </div>
+
+                <div class="box1">
+                    <ul>
+                        <li class="a">Musik</li>
+                        <li class="a">Einstellungen</li>
+    
+                    </ul>
+    
+                    <ul>
+                        <li class="a">Bestenliste</li>
+                        <li class="a" onclick="fullscreen()">Spiel Starten</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="start">
+            <div class="start-img">
+                <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="">
+            </div>
+
+            <canvas width="" height="" id="canvas"></canvas>
+
+            <div class="mobile-control">
+                <div class="mobile-left">
+                    <img id="m-left" src="img/mobile_control/arrow-left.png" alt="">
+                    <img id="m-right" src="img/mobile_control/arrow-right.png" alt="">
+                </div>
+        
+                <div class="mobile-right">
+                    <img id="m-d" src="img/mobile_control/d.png" alt="">
+                    <img id="m-space" src="img/mobile_control/space.png" alt="">
+                </div>
+            </div>
+        </div>
+
+        
+
+        </canvas>
+    </div>
+
+    
+    <script src="./script.js"></script>
 </body>
 
 </html>
