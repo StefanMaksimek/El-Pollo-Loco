@@ -1,5 +1,6 @@
 let world;
 let keyboard = new Keyboard();
+let play = false
 
 
 function init() {
@@ -102,5 +103,5 @@ document.getElementById('m-space').addEventListener('touchend', e => {
 
 function fullscreen() {
     document.getElementById('canvas').requestFullscreen()
-    canvas.height = window.innerHeight
+    play = true
 }

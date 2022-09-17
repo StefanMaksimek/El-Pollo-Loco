@@ -17,7 +17,7 @@ class Character extends MovableObjekt {
 
     bgCounter = this.bgCounter
     otherDirection = false;
-    animationSpeed = 10;
+    animationSpeed = 15;
     idleCounter = 0
 
 

@@ -1,10 +1,10 @@
 const originalHeight = 1080; // Original size of BackgroundImage
 
-let canvasHeight = 480; // Game window height
+let canvasHeight = 1080; // Game window height
 let canvasWidth = canvasHeight / 9 * 16; // will set in relation to the canvasHeight
 
 let sizeVariable = 2; // Resizing of characters and items
-let scalefactor = 1 / originalHeight * canvasHeight / sizeVariable; // Resizing of all objects related to the game window to the original image height
+let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the game window to the original image height
 
 let FPS = 60
 let intervall = 1000 / FPS
@@ -19,4 +19,13 @@ let intervall = 1000 / FPS
      */
  function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
+  }
+
+/**
+ * generate random number as INTEGER between 0 and max
+ * @param {number} max 
+ * @returns random number as INTEGER
+ */
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
   }

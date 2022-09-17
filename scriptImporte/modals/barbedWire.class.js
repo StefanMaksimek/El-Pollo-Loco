@@ -4,11 +4,10 @@ class BarbedWire extends DrawableObject {
     width = 1920 * scalefactor / 3
     height = 1222 * scalefactor / 3
 
+    bottom = canvasHeight - this.height - 100
+
     x = this.leftEnd
     y = this.bottom
-
-    
-    bottom = canvasHeight - this.height - 50
 
     setCollisionX = 0 * scalefactor;
     setCollisionY = 0 * scalefactor;

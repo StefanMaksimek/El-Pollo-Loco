@@ -11,8 +11,8 @@ class ThrowableObject extends MovableObjekt {
     setCollisionWidth = 100 * scalefactor;
     setCollisionheigt = 100 * scalefactor;
 
-    speedX = 5;
-    speedY = 35;
+    speedX = 20;
+    speedY = 55;
     gravityY = canvasHeight - 250 * scalefactor - this.height;
 
     hit = false
@@ -66,15 +66,15 @@ class ThrowableObject extends MovableObjekt {
         setInterval(() => {
             if (direction) {
                 if (walkLeft || walkRight) {
-                    this.x -= 25
+                    this.x -= this.speedX + 15
                 } else {
-                    this.x -= 10
+                    this.x -= this.speedX
                 }
             } else {
                 if (walkLeft || walkRight) {
-                    this.x += 25
+                    this.x += this.speedX + 15
                 } else {
-                    this.x += 10
+                    this.x += this.speedX
                 }
             }
         }, intervall);

@@ -4,7 +4,7 @@ class MovableObjekt extends DrawableObject {
     animationSpeed = 0.1;
 
     speedY = 0;
-    accceleration = 5;
+    accceleration = 10;
 
     collidingX = 200;
     speedX = 0;
@@ -87,7 +87,7 @@ class MovableObjekt extends DrawableObject {
 
 
     jump() {
-        this.speedY = 40
+        this.speedY = 90
     }
 }
 

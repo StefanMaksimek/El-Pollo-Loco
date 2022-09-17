@@ -1,5 +1,5 @@
 class World {
-    deebugmode = false
+    deebugmode = true;
 
     ctx;
     canvas;
@@ -48,14 +48,17 @@ class World {
 
     run() {
         setInterval(() => {
-            this.pepeColliding();
-            this.enemyCollidingPepe();
-            this.checkThrowing()
-            this.throwingBottleColliding();
-            this.coinColliding();
-            this.bottleColliding()
-        }, 20);
+        if (play) {
+                this.pepeColliding();
+                this.enemyCollidingPepe();
+                this.checkThrowing()
+                this.throwingBottleColliding();
+                this.coinColliding();
+                this.bottleColliding()
+            }
+        }, 1);
     }
+
 
 
     checkThrowing() {
@@ -96,7 +99,7 @@ class World {
 
     enemyCollidingPepe() {
         this.level.enemies.forEach(enemy => {
-            if (enemy.isColliding(this.character) && !this.character.proofCollidingTime() || enemy.x < 2 * - canvasWidth + 500 || enemy.x > this.bgCounter * canvasWidth + 400) {
+            if (enemy.isColliding(this.character) && !this.character.proofCollidingTime() || enemy.x < 2 * - canvasWidth || enemy.x > this.bgCounter * canvasWidth) {
                 enemy.directionIndex++
             }
         })
@@ -119,7 +122,7 @@ class World {
 
 
     coinColliding() {
-        this.coins.forEach( (coin, i) => {
+        this.coins.forEach((coin, i) => {
             if (coin.isColliding(this.character)) {
                 this.coins.splice(i, 1)
                 this.coinBar.coins++
@@ -129,7 +132,7 @@ class World {
 
 
     bottleColliding() {
-        this.bottles.forEach( (bottle, i) => {
+        this.bottles.forEach((bottle, i) => {
             if (bottle.isColliding(this.character)) {
                 this.bottles.splice(i, 1)
                 this.bottleBar.bottles++
@@ -157,7 +160,7 @@ class World {
         this.addToMapp(this.healthBar);
         this.addToMapp(this.endbossHealthBar);
         this.addToMapp(this.coinBar);
-        
+
         this.addToMapp(this.bottleBar);
 
         this.numberOfcollectedItems()
@@ -170,10 +173,10 @@ class World {
 
 
     numberOfcollectedItems() {
-        this.ctx.font = '25px Boogaloo';
+        this.ctx.font = '80px Boogaloo';
         this.ctx.fillStyle = "white";
-        this.ctx.fillText(this.coinBar.coins, this.coinBar.width + this.coinBar.x, this.coinBar.y + 25);
-        this.ctx.fillText(this.bottleBar.bottles, this.bottleBar.width + this.bottleBar.x, this.bottleBar.y + 25);
+        this.ctx.fillText(this.coinBar.coins, this.coinBar.width + this.coinBar.x, this.coinBar.y + 70);
+        this.ctx.fillText(this.bottleBar.bottles, this.bottleBar.width + this.bottleBar.x, this.bottleBar.y + 70);
     }
 
 
@@ -185,13 +188,13 @@ class World {
                 imageCounter = 1
             }
             this.setBackgroundParts(i, imageCounter);
-            //this.setEnemies();
+            this.setEnemies();
             this.bgCounter = i;
             this.moveableObject.bgCounter = i;
         }
         this.createClouds();
-        //this.setObstacles();
-        //this.setEndboss();
+        this.setObstacles();
+        this.setEndboss();
         this.setCoins();
         this.setBottles();
     }
@@ -237,71 +240,37 @@ class World {
     setObstacles() {
         this.level.enemies.push(
             new BarbedWire(this.barbedWire.leftEnd, this.barbedWire.bottom),
-            new BarbedWire(this.barbedWire.leftEnd + 80, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.leftEnd + 160, this.barbedWire.bottom),
-            new BarbedWire(this.barbedWire.leftEnd + 40, this.barbedWire.bottom - 60),
-            new BarbedWire(this.barbedWire.leftEnd + 120, this.barbedWire.bottom - 60),
+            new BarbedWire(this.barbedWire.leftEnd + 320, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.leftEnd + 80, this.barbedWire.bottom - 120),
+            new BarbedWire(this.barbedWire.leftEnd + 240, this.barbedWire.bottom - 120),
+            new BarbedWire(this.barbedWire.leftEnd + 160, this.barbedWire.bottom - 240),
 
-            new BarbedWire(this.barbedWire.rightEnd, this.barbedWire.bottom),
-            new BarbedWire(this.barbedWire.rightEnd + 80, this.barbedWire.bottom),
-            new BarbedWire(this.barbedWire.rightEnd + 160, this.barbedWire.bottom),
-            new BarbedWire(this.barbedWire.rightEnd + 40, this.barbedWire.bottom - 60),
-            new BarbedWire(this.barbedWire.rightEnd + 120, this.barbedWire.bottom - 60),
-            new BarbedWire(this.barbedWire.rightEnd + 80, this.barbedWire.bottom - 120),
+            new BarbedWire(this.barbedWire.rightEnd - 200, this.barbedWire.bottom),
+            new BarbedWire(this.barbedWire.rightEnd - 160 - 200, this.barbedWire.bottom),
+            new BarbedWire(this.barbedWire.rightEnd - 320 - 200, this.barbedWire.bottom),
+            new BarbedWire(this.barbedWire.rightEnd - 80 - 200, this.barbedWire.bottom - 120),
+            new BarbedWire(this.barbedWire.rightEnd - 240 - 200, this.barbedWire.bottom - 120),
+            new BarbedWire(this.barbedWire.rightEnd - 160 - 200, this.barbedWire.bottom - 240),
         )
     }
 
 
     setCoins() {
-        this.coins.push(
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-            new Coin(),
-        )
+        for (let i = 0; i < 6 * this.bgCounter; i++) {
+            this.coins.push(
+                new Coin(),
+            )
+        }
     }
 
 
     setBottles() {
-        this.bottles.push(
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-            new Bottle(),
-        )
+        for (let i = 0; i < 6 * this.bgCounter; i++) {
+            this.bottles.push(
+                new Bottle(),
+            )
+        }
     }
 
 

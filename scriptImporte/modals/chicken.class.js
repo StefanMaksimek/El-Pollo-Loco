@@ -2,7 +2,7 @@ class Chicken extends MovableObjekt {
     height = 243 * scalefactor;
     width = 248 * scalefactor;
 
-    x = 200 + Math.random() * 500;
+    x = 200 + getRandomArbitrary(0, canvasWidth * this.bgCounter);
     chickenWalkline = this.characterWalkline - 15 + this.characterWalkline;
     gravityY = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor);
     y = this.gravityY;
@@ -12,12 +12,12 @@ class Chicken extends MovableObjekt {
     setCollisionWidth = 0 * scalefactor;
     setCollisionheigt = 40 * scalefactor;
 
-    minSpeed = 0.5;
-    maxSpeed = 2.8;
+    minSpeed = 1;
+    maxSpeed = 5;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
-    movingSpeed = 80 / this.animationSpeed // for setting intervall
+    movingSpeed = 160 / this.animationSpeed // for setting intervall
 
-    directionIndex = 0; // even for left; odd for right
+    directionIndex = getRandomInt(3); // even for left; odd for right
     otherDirection = false;
 
     energy = 10
@@ -44,23 +44,28 @@ class Chicken extends MovableObjekt {
 
     moving() {
         setInterval(() => {
-            if (!this.isDead) {
-                this.playAnimation(this.IMAGES_WALKING)
-            } else {
-                this.playAnimation(this.IMAGES_DEATH)
+            if (play) {
+                if (!this.isDead) {
+                    this.playAnimation(this.IMAGES_WALKING)
+                } else {
+                    this.playAnimation(this.IMAGES_DEATH)
+                }
             }
         }, this.movingSpeed)
+
         setInterval(() => {
-            if (!this.isDead) {
-                if (this.directionIndex % 2) {
-                    this.moveRight()
-                    this.otherDirection = true;
+            if (play) {
+                if (!this.isDead) {
+                    if (this.directionIndex % 2) {
+                        this.moveRight()
+                        this.otherDirection = true;
+                    } else {
+                        this.moveLeft()
+                        this.otherDirection = false;
+                    }
                 } else {
-                    this.moveLeft()
-                    this.otherDirection = false;
+                    this.y += 5;
                 }
-            } else {
-                this.y += 2;
             }
         }, 1000 / 60)
     }
