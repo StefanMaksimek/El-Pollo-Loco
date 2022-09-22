@@ -44,7 +44,9 @@ class SmallChicken extends MovableObjekt {
 
  
     moving() {
+        console.log('play', play)
         if (play) {
+            console.log('intervall', intervall)
             this.setStoppableInterval(this.animate, this.movingSpeed)
             this.setStoppableInterval(this.direction, intervall)
         }
@@ -85,7 +87,7 @@ class SmallChicken extends MovableObjekt {
       setStoppableInterval(fn, t) {
         let id = setInterval(fn, t);
         intervallIds.push(id);
-        console.log('sucses')
+        console.log('push intervall ',fn ,'sucses')
     }
 
 

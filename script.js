@@ -109,6 +109,7 @@ function startGame() {
     document.getElementById('start-img').style.display = 'none';
     document.getElementById('canvas').style.display = 'flex';
     play = true
+    world.setEnemies()
 
     if ('ontouchstart' in window) {
         document.getElementById('mobile-control').style.display = 'flex'

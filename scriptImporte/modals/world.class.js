@@ -35,7 +35,7 @@ class World {
         this.drawableObject = new DrawableObject();
         this.character = new Character();
         this.chicken = new Chicken();
-        this.smallChicen = new SmallChicken();
+        //this.smallChicen = new SmallChicken();
         this.endboss = new Endboss();
         this.barbedWire = new BarbedWire()
         this.healthBar = new HealthBar();
@@ -203,7 +203,7 @@ class World {
                 imageCounter = 1
             }
             this.setBackgroundParts(i, imageCounter);
-            this.setEnemies();
+            //this.setEnemies();
             this.bgCounter = i;
             this.moveableObject.bgCounter = i;
         }
