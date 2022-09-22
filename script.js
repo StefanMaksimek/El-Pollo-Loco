@@ -18,6 +18,7 @@ function setCanvas() {
 }
 
 
+
 window.addEventListener('keydown', e => {
     if (e.key == 'ArrowRight') {
         keyboard.right = true;

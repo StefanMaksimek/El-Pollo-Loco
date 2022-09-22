@@ -8,24 +8,32 @@ let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the ga
 
 let FPS = 60
 let intervall = 1000 / FPS
-/**
-     * generate random number; use 0.1 to 3
-     * but you can use 0 to infinite ( however, that makes no sense)
-     * 
-     * 
-     * @param {Number} min 
-     * @param {Number} max 
-     * @returns random number between min and max
-     */
- function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-  }
+
+let intervallIds = [];
+
 
 /**
- * generate random number as INTEGER between 0 and max
- * @param {number} max 
- * @returns random number as INTEGER
- */
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
+* generate random number; use 0.1 to 3
+* but you can use 0 to infinite ( however, that makes no sense)
+* 
+* 
+* @param {Number} min 
+* @param {Number} max 
+* @returns random number between min and max
+*/
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
+/**
+* generate random number as INTEGER between 0 and max
+* @param {number} max 
+* @returns random number as INTEGER
+*/
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+
+

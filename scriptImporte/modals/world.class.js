@@ -1,5 +1,5 @@
 class World {
-    deebugmode = false;
+    deebugmode = true;
 
     ctx;
     canvas;
@@ -35,6 +35,7 @@ class World {
         this.drawableObject = new DrawableObject();
         this.character = new Character();
         this.chicken = new Chicken();
+        this.smallChicen = new SmallChicken();
         this.endboss = new Endboss();
         this.barbedWire = new BarbedWire()
         this.healthBar = new HealthBar();
@@ -94,12 +95,11 @@ class World {
 
     pepeColliding() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy) && this.character.y < this.character.gravityY && enemy instanceof Chicken && !this.character.proofCollidingTime()) {
-                console.log('success')
+            if (this.character.isColliding(enemy) && this.character.y < this.character.gravityY && (enemy instanceof Chicken || enemy instanceof SmallChicken) && !this.character.proofCollidingTime()) {
                 enemy.energy = 0
-                this.character.speedY = 20
+                this.character.speedY = 15
             } else if (this.character.isColliding(enemy) && !this.character.proofCollidingTime() && !enemy.isDead) {
-                this.drawableObject.characterEnergy -= enemy.damage
+                //this.drawableObject.characterEnergy -= enemy.damage
                 this.character.energy = this.drawableObject.characterEnergy
                 this.healthBar.setHealthBar(this.drawableObject.characterEnergy)
                 this.character.colliding = this.character.isColliding(enemy)
@@ -248,6 +248,7 @@ class World {
     setEnemies() {
         this.level.enemies.push(
             new Chicken(),
+            new SmallChicken(),
         )
     }
 

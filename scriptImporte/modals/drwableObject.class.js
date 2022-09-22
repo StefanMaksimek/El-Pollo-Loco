@@ -50,7 +50,7 @@ class DrawableObject {
             ctx.strokeStyle = 'black';
             ctx.stroke();
         
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof Coin || this instanceof Bottle) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof Coin || this instanceof Bottle || this instanceof SmallChicken) {
             ctx.beginPath();
             ctx.rect(this.x + this.setCollisionX, this.y + this.setCollisionY, this.width - this.setCollisionWidth, this.height - this.setCollisionheigt);
             ctx.lineWidth = 2;

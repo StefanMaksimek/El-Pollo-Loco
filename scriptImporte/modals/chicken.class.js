@@ -22,7 +22,7 @@ class Chicken extends MovableObjekt {
     otherDirection = false;
 
     energy = 10
-    damage = 5;
+    damage = 10;
     isDead = false
 
     IMAGES_WALKING = [
