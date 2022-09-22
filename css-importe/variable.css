@@ -13,6 +13,7 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     font-family: 'Boogaloo';
     background-image: url("../img/new_items/desert-5112222.png");
     background-size: cover;
@@ -47,7 +48,7 @@ h1 {
 }
 
 .start-img {
-    display: none;
+    display: flex;
 }
 
 .start img {
@@ -67,7 +68,7 @@ h1 {
 }
 
 canvas {
-    display: flex;
+    display: none;
     background-color: gray;
     border-radius: 0.2rem;
     box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.304);
@@ -81,7 +82,7 @@ canvas {
     left: 0;
     right: 0;
     padding: 0.5rem;
-    display: flex;
+    display: none;
     justify-content: space-between;
 }
 

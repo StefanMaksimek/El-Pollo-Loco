@@ -1,5 +1,5 @@
 class World {
-    deebugmode = true;
+    deebugmode = false;
 
     ctx;
     canvas;
@@ -48,17 +48,28 @@ class World {
 
     run() {
         setInterval(() => {
-        if (play) {
+            if (play) {
                 this.pepeColliding();
                 this.enemyCollidingPepe();
                 this.checkThrowing()
                 this.throwingBottleColliding();
                 this.coinColliding();
                 this.bottleColliding()
+                this.proofGameEnd()
             }
         }, 1);
     }
 
+
+    proofGameEnd() {
+        if (this.character.energy <= 0) {
+            
+            document.getElementById('canvas').style.display = 'none';
+            document.getElementById('mobile-control').style.display = 'none'
+            document.getElementById('start-img').style.display = 'flex';
+            document.getElementById('start-img').innerHTML = `<img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">`
+        }
+    }
 
 
     checkThrowing() {
@@ -99,8 +110,12 @@ class World {
 
     enemyCollidingPepe() {
         this.level.enemies.forEach(enemy => {
-            if (enemy.isColliding(this.character) && !this.character.proofCollidingTime() || enemy.x < 2 * - canvasWidth || enemy.x > this.bgCounter * canvasWidth) {
+            if ((enemy.isColliding(this.character) && !this.character.proofCollidingTime()
+                || enemy.x < 2 * - canvasWidth + 900
+                || enemy.x > this.bgCounter * canvasWidth - 1200)
+                && enemy.directionTime > 200) {
                 enemy.directionIndex++
+                enemy.directionTime = 0
             }
         })
     }
@@ -277,8 +292,6 @@ class World {
     setEndboss() {
         this.level.enemies.push(
             new Endboss(),
-            new Chicken(),
-
         )
     }
 

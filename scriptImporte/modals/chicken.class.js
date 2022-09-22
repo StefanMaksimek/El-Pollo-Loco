@@ -18,6 +18,7 @@ class Chicken extends MovableObjekt {
     movingSpeed = 160 / this.animationSpeed // for setting intervall
 
     directionIndex = getRandomInt(3); // even for left; odd for right
+    directionTime = 0;
     otherDirection = false;
 
     energy = 10
@@ -56,6 +57,7 @@ class Chicken extends MovableObjekt {
         setInterval(() => {
             if (play) {
                 if (!this.isDead) {
+                    this.directionTime += 1;
                     if (this.directionIndex % 2) {
                         this.moveRight()
                         this.otherDirection = true;
@@ -70,3 +72,5 @@ class Chicken extends MovableObjekt {
         }, 1000 / 60)
     }
 }
+
+

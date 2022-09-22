@@ -33,6 +33,7 @@
     <script src="./scriptImporte/modals/backgroundParts.class.js"></script>
     <script src="./scriptImporte/modals/character.class.js"></script>
     <script src="./scriptImporte/modals/chicken.class.js"></script>
+    <script src="./scriptImporte/modals/smallChicken.class.js"></script>
     <script src="./scriptImporte/modals/endboss.class.js"></script>
 
     <script src="./scriptImporte/modals/level.class.js"></script>
@@ -74,20 +75,20 @@
     
                     <ul>
                         <li class="a">Bestenliste</li>
-                        <li class="a" onclick="fullscreen()">Spiel Starten</li>
+                        <li class="a" onclick="startGame()">Spiel Starten</li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="start">
-            <div class="start-img">
+            <div class="start-img" id="start-img">
                 <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="">
             </div>
 
             <canvas width="" height="" id="canvas"></canvas>
 
-            <div class="mobile-control">
+            <div class="mobile-control" id="mobile-control">
                 <div class="mobile-left">
                     <img id="m-left" src="img/mobile_control/arrow-left.png" alt="">
                     <img id="m-right" src="img/mobile_control/arrow-right.png" alt="">
@@ -100,11 +101,8 @@
             </div>
         </div>
 
-        
-
         </canvas>
     </div>
-
     
     <script src="./script.js"></script>
 </body>
