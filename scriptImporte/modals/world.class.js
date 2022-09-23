@@ -10,7 +10,7 @@ class World {
     character;
     chicken;
     barbedWire;
-    endboss;
+    //endboss;
     level;
     cameraX;
     lastThrow;
@@ -35,8 +35,8 @@ class World {
         this.character = new Character();
         this.chicken = new Chicken();
         this.smallChicen = new SmallChicken();
-        this.endboss = new Endboss();
-        this.barbedWire = new BarbedWire()
+        //this.endboss = new Endboss();
+        this.barbedWire = new BarbedWire();
         this.healthBar = new HealthBar();
         this.endbossHealthBar = new EndbossHealthBar();
         this.coinBar = new CoinBar();
@@ -51,12 +51,12 @@ class World {
             if (play) {
                 this.pepeColliding();
                 this.enemyCollidingPepe();
-                this.checkThrowing()
+                this.checkThrowing();
                 this.throwingBottleColliding();
                 this.coinColliding();
-                this.bottleColliding()
-                this.proofCharacterSeeBoss()
-                this.proofGameEnd()
+                this.bottleColliding();
+                this.proofCharacterSeeBoss();
+                this.proofGameEnd();
             }
         }, 1);
     }
@@ -64,7 +64,7 @@ class World {
 
     proofCharacterSeeBoss() {
         if (!this.endboss.firstContact && this.character.x > bgCounter * canvasWidth - 2900) {
-            this.endboss.firstContact = true
+            this.endboss.firstContact = true;
         }
     }
 

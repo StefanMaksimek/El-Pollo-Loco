@@ -17,6 +17,7 @@ class Endboss extends MovableObjekt {
 
     animationIndex = 0
     firstContact = false
+    id = Math.random()
 
     energy = 100
     damage = 20;
@@ -77,7 +78,6 @@ class Endboss extends MovableObjekt {
     }
 
     imgAnimation() {
-        console.log('this.firstContact', this.firstContact)
         if (play) {
             if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING)
@@ -89,9 +89,9 @@ class Endboss extends MovableObjekt {
 
 
     move() {
-        
+        console.log('this.firstContact', this.firstContact, 'id', this.id)
        if (this.firstContact) {
-        this.moveLeft
+        this.moveLeft()
        }
     }
 }

@@ -13,7 +13,6 @@ let intervallIds = []; // Arrey to stopp all intervalls
 
 let levelIndex = 1 // Integer for setting enemies in level
 let bgCounter = generateLevelsize()
-let firstContact =false
 
 
 /**
