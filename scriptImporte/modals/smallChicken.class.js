@@ -2,7 +2,7 @@ class SmallChicken extends MovableObjekt {
     height = 243 * scalefactor;
     width = 248 * scalefactor;
 
-    x = 200 + getRandomArbitrary(0, canvasWidth * this.bgCounter);
+    x = 1800 + getRandomArbitrary(0, canvasWidth * bgCounter - 3000);
     chickenWalkline = this.characterWalkline - 15 + this.characterWalkline;
     gravityY = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor);
     y = this.gravityY;
@@ -16,6 +16,10 @@ class SmallChicken extends MovableObjekt {
     maxSpeed = 4;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
     movingSpeed = 160 / this.animationSpeed // for setting intervall
+    jumpImpuls = getRandomArbitrary(30, 80)
+    jumpCounter = 0;
+    jumpPower = getRandomArbitrary(50, 90)
+    accceleration = 10
 
     directionIndex = getRandomInt(3); // even for left; odd for right
     directionTime = 0;
@@ -38,22 +42,16 @@ class SmallChicken extends MovableObjekt {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
         this.loadImages(this.IMAGES_WALKING)
         this.loadImages(this.IMAGES_DEATH)
+        this.applyGravity(this.gravityY)
         this.moving()
         this.proofAlive()
     }
 
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- 
+
     moving() {
-        console.log('play', play)
         if (play) {
-            console.log('intervall', intervall)
-            this.setStoppableInterval(this.animate, this.movingSpeed)
-            this.setStoppableInterval(this.direction, intervall)
+            setStoppableInterval(this.animate.bind(this), this.movingSpeed)
+            setStoppableInterval(this.direction.bind(this), intervall)
         }
     }
 
@@ -72,9 +70,11 @@ class SmallChicken extends MovableObjekt {
             this.directionTime += 1;
             if (this.directionIndex % 2) {
                 this.moveRight()
+                this.setJumpImpulse()
                 this.otherDirection = true;
             } else {
                 this.moveLeft()
+                this.setJumpImpulse()
                 this.otherDirection = false;
             }
         } else {
@@ -83,53 +83,15 @@ class SmallChicken extends MovableObjekt {
     }
 
 
-     /**
-    * this fn is the global fn for a stoppable setIntervall  
-    * 
-    * @param {function} fn 
-    * @param {time} t milliseconds
-    */
-      setStoppableInterval(fn, t) {
-        let id = setInterval(fn, t);
-        intervallIds.push(id);
-        console.log('push intervall ',fn ,'sucses')
+    setJumpImpulse() {
+        if (this.y == this.gravityY) {
+            this.jumpCounter += 0.5
+        }
+        if (this.jumpCounter > this.jumpImpuls ) {
+            this.jump(this.jumpPower)
+            this.jumpCounter = 0
+            this.jumpImpuls = getRandomArbitrary(50, 120)
+            this.jumpPower = getRandomArbitrary(50, 90)
+        }
     }
-
-
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////
-
-    
-     movingOld() {
-         setInterval(() => {
-             if (play) {
-                 if (!this.isDead) {
-                     this.playAnimation(this.IMAGES_WALKING)
-                 } else {
-                     this.playAnimation(this.IMAGES_DEATH)
-                 }
-             }
-         }, this.movingSpeed)
- 
-         setInterval(() => {
-             if (play) {
-                 if (!this.isDead) {
-                     this.directionTime += 1;
-                     if (this.directionIndex % 2) {
-                         this.moveRight()
-                         this.otherDirection = true;
-                     } else {
-                         this.moveLeft()
-                         this.otherDirection = false;
-                     }
-                 } else {
-                     this.y += 5;
-                 }
-             }
-         }, 1000 / 60)
-     }
-     
 }

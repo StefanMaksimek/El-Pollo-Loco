@@ -15,9 +15,10 @@ class Character extends MovableObjekt {
     setCollisionWidth = 200 * scalefactor;
     setCollisionheigt = 550 * scalefactor;
 
-    bgCounter = this.bgCounter
     otherDirection = false;
     animationSpeed = 15;
+    jumpPower = 90;
+    accceleration = 10;
     idleCounter = 0
 
 
@@ -116,7 +117,7 @@ class Character extends MovableObjekt {
                 this.otherDirection = true;
             }
             if (keyboard.space && this.y == this.gravityY) {
-                this.jump()
+                this.jump(this.jumpPower)
             }
             this.cameraView()
         }, intervall)
@@ -161,7 +162,7 @@ class Character extends MovableObjekt {
 
 
     proofCanvasEndRight() {
-        return this.x < this.bgCounter * canvasWidth - this.width
+        return this.x < bgCounter * canvasWidth - this.width
     }
 
 
@@ -174,7 +175,7 @@ class Character extends MovableObjekt {
         if (this.x > - 2 * canvasWidth + this.first_positionOfCharacter) {
             this.world.cameraX = this.first_positionOfCharacter - this.x;
         }
-        if (this.x < this.bgCounter * canvasWidth - canvasWidth + this.first_positionOfCharacter) {
+        if (this.x < bgCounter * canvasWidth - canvasWidth + this.first_positionOfCharacter) {
             this.world.cameraX = this.first_positionOfCharacter - this.x;
         }
     }

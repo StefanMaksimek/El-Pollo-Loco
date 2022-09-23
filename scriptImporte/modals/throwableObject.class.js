@@ -14,6 +14,7 @@ class ThrowableObject extends MovableObjekt {
     speedX = 20;
     speedY = 55;
     gravityY = canvasHeight - 250 * scalefactor - this.height;
+    accceleration = 10
 
     hit = false
 

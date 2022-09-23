@@ -9,14 +9,16 @@ let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the ga
 let FPS = 60
 let intervall = 1000 / FPS
 
-let intervallIds = [];
+let intervallIds = []; // Arrey to stopp all intervalls 
+
+let levelIndex = 1 // Integer for setting enemies in level
+let bgCounter = generateLevelsize()
+let firstContact =false
 
 
 /**
-* generate random number; use 0.1 to 3
+* generate random number; for example use 0.1 to 3
 * but you can use 0 to infinite ( however, that makes no sense)
-* 
-* 
 * @param {Number} min 
 * @param {Number} max 
 * @returns random number between min and max
@@ -35,5 +37,9 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+
+function generateLevelsize() {
+  return levelIndex * 2 + levelIndex
+}
 
 

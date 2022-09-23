@@ -2,7 +2,7 @@ class Chicken extends MovableObjekt {
     height = 243 * scalefactor;
     width = 248 * scalefactor;
 
-    x = 200 + getRandomArbitrary(0, canvasWidth * this.bgCounter);
+    x = 1800 + getRandomArbitrary(0, canvasWidth * bgCounter - 3000);
     chickenWalkline = this.characterWalkline - 15 + this.characterWalkline;
     gravityY = canvasHeight - this.height - ((this.walkLine + this.chickenWalkline) * scalefactor);
     y = this.gravityY;
@@ -18,7 +18,7 @@ class Chicken extends MovableObjekt {
     movingSpeed = 160 / this.animationSpeed // for setting intervall
 
     directionIndex = getRandomInt(3); // even for left; odd for right
-    directionTime = 0;
+    directionTime = 199;
     otherDirection = false;
 
     energy = 10

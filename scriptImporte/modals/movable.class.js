@@ -8,7 +8,7 @@ class MovableObjekt extends DrawableObject {
 
     collidingX = 200;
     speedX = 0;
-    acccelerationX = 1;
+    acccelerationX = 10;
 
     colliding = false
     lastHit = new Date().getTime()
@@ -60,7 +60,6 @@ class MovableObjekt extends DrawableObject {
         } else {
             return this.y < gravityY
         }
-
     }
 
 
@@ -83,8 +82,8 @@ class MovableObjekt extends DrawableObject {
     }
 
 
-    jump() {
-        this.speedY = 90
+    jump(jumpPower) {
+        this.speedY = jumpPower
     }
 }
 

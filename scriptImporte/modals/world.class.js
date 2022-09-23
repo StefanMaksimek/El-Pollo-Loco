@@ -12,7 +12,6 @@ class World {
     barbedWire;
     endboss;
     level;
-    bgCounter;
     cameraX;
     lastThrow;
 
@@ -35,7 +34,7 @@ class World {
         this.drawableObject = new DrawableObject();
         this.character = new Character();
         this.chicken = new Chicken();
-        //this.smallChicen = new SmallChicken();
+        this.smallChicen = new SmallChicken();
         this.endboss = new Endboss();
         this.barbedWire = new BarbedWire()
         this.healthBar = new HealthBar();
@@ -56,9 +55,17 @@ class World {
                 this.throwingBottleColliding();
                 this.coinColliding();
                 this.bottleColliding()
+                this.proofCharacterSeeBoss()
                 this.proofGameEnd()
             }
         }, 1);
+    }
+
+
+    proofCharacterSeeBoss() {
+        if (!this.endboss.firstContact && this.character.x > bgCounter * canvasWidth - 2900) {
+            this.endboss.firstContact = true
+        }
     }
 
 
@@ -112,10 +119,10 @@ class World {
         this.level.enemies.forEach(enemy => {
             if ((enemy.isColliding(this.character) && !this.character.proofCollidingTime()
                 || enemy.x < 2 * - canvasWidth + 900
-                || enemy.x > this.bgCounter * canvasWidth - 1200)
+                || enemy.x > bgCounter * canvasWidth - 1200)
                 && enemy.directionTime > 200) {
                 enemy.directionIndex++
-                enemy.directionTime = 0
+                enemy.directionTime = 0;
             }
         })
     }
@@ -197,15 +204,12 @@ class World {
 
     createBackgrounds() {
         let imageCounter = 0;
-        for (let i = -2; i < 4; i++) {
+        for (let i = -2; i < bgCounter; i++) {
             imageCounter++;
             if (imageCounter == 3) {
                 imageCounter = 1
             }
             this.setBackgroundParts(i, imageCounter);
-            //this.setEnemies();
-            this.bgCounter = i;
-            this.moveableObject.bgCounter = i;
         }
         this.createClouds();
         this.setObstacles();
@@ -245,11 +249,13 @@ class World {
     }
 
 
-    setEnemies() {
-        this.level.enemies.push(
-            new Chicken(),
-            new SmallChicken(),
-        )
+    setEnemies(qantity) {
+        for (let i = 0; i < qantity * 4; i++) {
+            this.level.enemies.push(
+                new Chicken(),
+                new SmallChicken(),
+            )      
+        }
     }
 
 
@@ -273,7 +279,7 @@ class World {
 
 
     setCoins() {
-        for (let i = 0; i < 6 * this.bgCounter; i++) {
+        for (let i = 0; i < 6 * bgCounter; i++) {
             this.coins.push(
                 new Coin(),
             )
@@ -282,7 +288,7 @@ class World {
 
 
     setBottles() {
-        for (let i = 0; i < 6 * this.bgCounter; i++) {
+        for (let i = 0; i < 6 * bgCounter; i++) {
             this.bottles.push(
                 new Bottle(),
             )

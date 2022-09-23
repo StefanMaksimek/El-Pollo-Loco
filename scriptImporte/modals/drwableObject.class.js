@@ -2,9 +2,8 @@ class DrawableObject {
     height = 100;
     width = 100;
 
-    bgCounter = 4;
     leftEnd = 2 * - canvasWidth + 200;
-    rightEnd = this.bgCounter * canvasWidth - 400;
+    rightEnd = bgCounter * canvasWidth - 400;
 
     
     x = 0;

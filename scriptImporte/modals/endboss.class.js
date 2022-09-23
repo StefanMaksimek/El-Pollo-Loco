@@ -12,8 +12,11 @@ class Endboss extends MovableObjekt {
     setCollisionheigt = 250 * scalefactor;
 
     minSpeed = 2;
-    maxSpeed = 4;
+    maxSpeed = levelIndex + 1;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
+
+    animationIndex = 0
+    firstContact = false
 
     energy = 100
     damage = 20;
@@ -62,28 +65,33 @@ class Endboss extends MovableObjekt {
         this.loadImages(this.IMAGES_ATTACK)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_DEAD)
-
-        this.x = this.bgCounter * canvasWidth - this.width * 3
-        this.moving()
+        this.animate()
+        this.x = bgCounter * canvasWidth - this.width * 3
         this.proofAlive()
     }
 
 
-    moving() {
-        setInterval(() => {
-            if (play) {
-                if (!this.isDead) {
-                    this.playAnimation(this.IMAGES_WALKING)
-                } else {
-                    this.playAnimation(this.IMAGES_DEAD)
-                }
-            }
-        }, 100)
+    animate() {
+        setStoppableInterval(this.imgAnimation.bind(this), 100)
+        setStoppableInterval(this.move.bind(this), 1000 / 60)
+    }
 
-        setInterval(() => {
-            if (play) {
-                this.moveLeft()
+    imgAnimation() {
+        console.log('this.firstContact', this.firstContact)
+        if (play) {
+            if (!this.isDead) {
+                this.playAnimation(this.IMAGES_WALKING)
+            } else {
+                this.playAnimation(this.IMAGES_DEAD)
             }
-        }, 1000 / 60)
+        }
+    }
+
+
+    move() {
+        
+       if (this.firstContact) {
+        this.moveLeft
+       }
     }
 }

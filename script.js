@@ -109,7 +109,7 @@ function startGame() {
     document.getElementById('start-img').style.display = 'none';
     document.getElementById('canvas').style.display = 'flex';
     play = true
-    world.setEnemies()
+    world.setEnemies(levelIndex *3)
 
     if ('ontouchstart' in window) {
         document.getElementById('mobile-control').style.display = 'flex'
@@ -130,5 +130,16 @@ function fullscreen() {
     } else if (elem.webkitEnterFullScreen) {
         elem.webkitEnterFullScreen();
     }
-
 }
+
+
+    /**
+    * this fn is the global fn for a stoppable setIntervall  
+    * 
+    * @param {function} fn 
+    * @param {time} t milliseconds
+    */
+    function setStoppableInterval(fn, t) {
+        let id = setInterval(fn, t);
+        intervallIds.push(id);
+    }
