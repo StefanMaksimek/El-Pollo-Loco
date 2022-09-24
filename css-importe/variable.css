@@ -41,6 +41,7 @@ h1 {
 }
 
 .start {
+    width: 100%;
     position: relative;
     padding: 1rem;
     display: flex;
@@ -48,7 +49,7 @@ h1 {
 }
 
 .start-img {
-    display: flex;
+    display: none;
 }
 
 .start img {
@@ -56,6 +57,29 @@ h1 {
     object-fit: contain;
     border-radius: 0.2rem;
     box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.304);
+}
+
+.game-over {
+    width: 100%;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 0.2rem;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.304);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.level {
+    margin: 1rem;
+}
+
+.points {
+    width: 50%;
+    margin: 3rem;
+    display: flex;
+    justify-content: space-around;
 }
 
 .info {

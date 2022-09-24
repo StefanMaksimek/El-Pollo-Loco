@@ -21,6 +21,8 @@ class Character extends MovableObjekt {
     accceleration = 10;
     idleCounter = 0
 
+    distanceToEndboss = 5000
+
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -108,7 +110,7 @@ class Character extends MovableObjekt {
 
     setMove() {
         setInterval(() => {
-            if (keyboard.right && this.proofCanvasEndRight()) {
+            if (keyboard.right && this.proofCanvasEndRight() && this.distanceToEndboss > 160) {
                 this.moveRight()
                 this.otherDirection = false;
             }

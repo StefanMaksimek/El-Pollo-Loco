@@ -12,7 +12,7 @@ let intervall = 1000 / FPS
 let intervallIds = []; // Arrey to stopp all intervalls 
 
 let levelIndex = 1 // Integer for setting enemies in level
-let bgCounter = generateLevelsize()
+let bgCounter = 7
 
 
 /**
@@ -38,7 +38,5 @@ function getRandomInt(max) {
 
 
 function generateLevelsize() {
-  return levelIndex * 2 + levelIndex
+  bgCounter = levelIndex * 2 + levelIndex
 }
-
-

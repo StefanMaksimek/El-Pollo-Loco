@@ -49,36 +49,39 @@ class SmallChicken extends MovableObjekt {
 
 
     moving() {
-        if (play) {
             setStoppableInterval(this.animate.bind(this), this.movingSpeed)
             setStoppableInterval(this.direction.bind(this), intervall)
-        }
     }
 
 
     animate() {
-        if (!this.isDead) {
-            this.playAnimation(this.IMAGES_WALKING)
-        } else {
-            this.playAnimation(this.IMAGES_DEATH)
+        if (play) {
+            if (!this.isDead) {
+                this.playAnimation(this.IMAGES_WALKING)
+            } else {
+                this.playAnimation(this.IMAGES_DEATH)
+            }
         }
+       
     }
 
 
     direction() {
-        if (!this.isDead) {
-            this.directionTime += 1;
-            if (this.directionIndex % 2) {
-                this.moveRight()
-                this.setJumpImpulse()
-                this.otherDirection = true;
+        if (play) {
+            if (!this.isDead) {
+                this.directionTime += 1;
+                if (this.directionIndex % 2) {
+                    this.moveRight()
+                    this.setJumpImpulse()
+                    this.otherDirection = true;
+                } else {
+                    this.moveLeft()
+                    this.setJumpImpulse()
+                    this.otherDirection = false;
+                }
             } else {
-                this.moveLeft()
-                this.setJumpImpulse()
-                this.otherDirection = false;
+                this.y += 5;
             }
-        } else {
-            this.y += 5;
         }
     }
 

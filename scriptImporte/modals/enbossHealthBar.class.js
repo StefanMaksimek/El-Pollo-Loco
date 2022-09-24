@@ -13,12 +13,13 @@ class EndbossHealthBar extends DrawableObject {
     x = canvasWidth - this.width - 10;
     y = 10;
 
-    energy = 100
+    maxEnergy = 500;
+    energy = 100;
 
 
 
     constructor() {
-        super().loadImage(this.IMAGES_HEALTH[5])
+        super().loadImage(this.IMAGES_HEALTH[5]);
         this.loadImages(this.IMAGES_HEALTH);
         this.setHealthBar(100);
 
@@ -26,26 +27,25 @@ class EndbossHealthBar extends DrawableObject {
     }
 
     setHealthBar(energy) {
-        this.energy = energy
-        let path = this.IMAGES_HEALTH[this.resolveImageIndex()]
-        this.img = this.imageCache[path]
-
+        this.energy = energy;
+        let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
+        this.img = this.imageCache[path];
     }
 
 
     resolveImageIndex() {
-        if (this.energy == 100) {
-            return 0
-        } else if (this.energy > 80) {
-            return 1
-        } else if (this.energy > 60) {
-            return 2
-        } else if (this.energy > 40) {
-            return 3
-        } else if (this.energy > 20) {
-            return 4
+        if (this.energy == this.maxEnergy * 1) {
+            return 0;
+        } else if (this.energy > this.maxEnergy * 0.8) {
+            return 1;
+        } else if (this.energy > this.maxEnergy * 0.6) {
+            return 2;
+        } else if (this.energy > this.maxEnergy * 0.4) {
+            return 3;
+        } else if (this.energy > this.maxEnergy * 0.2) {
+            return 4;
         } else {
-            return 5
+            return 5;
         }
     }
 }

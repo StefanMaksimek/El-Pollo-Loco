@@ -109,7 +109,6 @@ function startGame() {
     document.getElementById('start-img').style.display = 'none';
     document.getElementById('canvas').style.display = 'flex';
     play = true
-    world.setEnemies(levelIndex *3)
 
     if ('ontouchstart' in window) {
         document.getElementById('mobile-control').style.display = 'flex'
@@ -142,4 +141,9 @@ function fullscreen() {
     function setStoppableInterval(fn, t) {
         let id = setInterval(fn, t);
         intervallIds.push(id);
+    }
+
+
+    function stoppAllIntervalls() {
+        intervallIds.forEach(clearInterval)
     }

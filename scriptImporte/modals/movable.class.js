@@ -10,17 +10,19 @@ class MovableObjekt extends DrawableObject {
     speedX = 0;
     acccelerationX = 10;
 
-    colliding = false
-    lastHit = new Date().getTime()
+    colliding = false;
+    lastHit = new Date().getTime();
 
     isDead = false;
+    deadTime = 0;
 
     proofAlive() {
         setInterval(() => {
             if (this.energy > 0) {
-                this.isDead = false
+                this.isDead = false;
             } else {
-                this.isDead = true
+                this.isDead = true;
+                this.deadTime++;
             }
         }, 10);
     }
@@ -29,15 +31,15 @@ class MovableObjekt extends DrawableObject {
     applyCollidingMove() {
         setInterval(() => {
             if (this.proofCollidingTime()) {
-                this.playAnimation(this.IMAGES_HURT)
+                this.playAnimation(this.IMAGES_HURT);
             }
         }, 150)
     }
 
 
     proofCollidingTime() {
-        let timepassed = new Date().getTime() - this.lastHit
-        return timepassed < 1500
+        let timepassed = new Date().getTime() - this.lastHit;
+        return timepassed < 1500;
     }
 
 
@@ -47,18 +49,18 @@ class MovableObjekt extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.accceleration;
             } else {
-                this.y = this.gravityY
-                this.speedY = 0
+                this.y = this.gravityY;
+                this.speedY = 0;
             }
-        }, 1000 / 25)
+        }, 1000 / 25);
     }
 
 
     isAboveGround(gravityY) {
         if (this instanceof ThrowableObject || this.isDead) {
-            return true
+            return true;
         } else {
-            return this.y < gravityY
+            return this.y < gravityY;
         }
     }
 
@@ -73,17 +75,17 @@ class MovableObjekt extends DrawableObject {
 
     moveRight() {
 
-        this.x += this.animationSpeed
+        this.x += this.animationSpeed;
     }
 
 
     moveLeft() {
-        this.x -= this.animationSpeed
+        this.x -= this.animationSpeed;
     }
 
 
     jump(jumpPower) {
-        this.speedY = jumpPower
+        this.speedY = jumpPower;
     }
 }
 
