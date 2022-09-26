@@ -9,7 +9,7 @@ class BottleBar extends DrawableObject{
     ];
     IMAGE_BOTTLE = [
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
-    ]
+    ];
 
 
     /**
@@ -28,7 +28,7 @@ class BottleBar extends DrawableObject{
 
 
     constructor() {
-        super().loadImage(this.IMAGE_BOTTLE)
+        super().loadImage(this.IMAGE_BOTTLE);
         /** 
         super().loadImage(this.IMAGES_Bottle[0])
         this.loadImages(this.IMAGES_Bottle);
@@ -38,9 +38,9 @@ class BottleBar extends DrawableObject{
     }
 
     setBottleBar(bottleBag) {
-        this.bottleBag = bottleBag
-        let path = this.IMAGES_Bottle[this.resolveImageIndex()]
-        this.img = this.imageCache[path]
+        this.bottleBag = bottleBag;
+        let path = this.IMAGES_Bottle[this.resolveImageIndex()];
+        this.img = this.imageCache[path];
     }
 
 

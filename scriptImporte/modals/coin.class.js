@@ -8,13 +8,13 @@ class Coin extends DrawableObject {
     width = 300 * scalefactor * this.sizefactor;
     height = 300 * scalefactor * this.sizefactor;
 
-    minX = this.leftEnd + 500
-    maxX = this.rightEnd - 700
-    minY = 100
-    maxY = 300
+    minX = this.leftEnd + 500;
+    maxX = this.rightEnd - 700;
+    minY = 100;
+    maxY = 300;
 
-    x = getRandomArbitrary(this.minX, this.maxX)
-    y = getRandomArbitrary(this.minY, this.maxY)
+    x = getRandomArbitrary(this.minX, this.maxX);
+    y = getRandomArbitrary(this.minY, this.maxY);
 
     setCollisionX = 100 * scalefactor * this.sizefactor;
     setCollisionY = 100 * scalefactor * this.sizefactor;
@@ -23,7 +23,7 @@ class Coin extends DrawableObject {
 
 
     constructor() {
-        super().loadImage(this.IMAGES_COIN[1])
-        this.loadImages(this.IMAGES_COIN)
+        super().loadImage(this.IMAGES_COIN[1]);
+        this.loadImages(this.IMAGES_COIN);
     }
 }

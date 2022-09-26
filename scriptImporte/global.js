@@ -6,13 +6,13 @@ let canvasWidth = canvasHeight / 9 * 16; // will set in relation to the canvasHe
 let sizeVariable = 2; // Resizing of characters and items
 let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the game window to the original image height
 
-let FPS = 60
-let intervall = 1000 / FPS
+let FPS = 60;
+let intervall = 1000 / FPS;
 
 let intervallIds = []; // Arrey to stopp all intervalls 
 
-let levelIndex = 1 // Integer for setting enemies in level
-let bgCounter = 7
+let levelIndex = 1; // Integer for setting enemies in level
+let bgCounter = 7;
 
 
 /**

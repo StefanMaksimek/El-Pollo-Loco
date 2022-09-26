@@ -16,6 +16,7 @@ class MovableObjekt extends DrawableObject {
     isDead = false;
     deadTime = 0;
 
+
     proofAlive() {
         setInterval(() => {
             if (this.energy > 0) {
@@ -28,23 +29,14 @@ class MovableObjekt extends DrawableObject {
     }
 
 
-    applyCollidingMove() {
-        setInterval(() => {
-            if (this.proofCollidingTime()) {
-                this.playAnimation(this.IMAGES_HURT);
-            }
-        }, 150)
-    }
-
-
     proofCollidingTime() {
         let timepassed = new Date().getTime() - this.lastHit;
-        return timepassed < 1500;
+        return timepassed < 1000;
     }
 
 
     applyGravity(gravityY) {
-        setInterval(() => {
+       let id =  setInterval(() => {
             if (this.isAboveGround(gravityY) || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.accceleration;
@@ -53,6 +45,7 @@ class MovableObjekt extends DrawableObject {
                 this.speedY = 0;
             }
         }, 1000 / 25);
+        intervallIds.push(id);
     }
 
 
@@ -88,4 +81,3 @@ class MovableObjekt extends DrawableObject {
         this.speedY = jumpPower;
     }
 }
-

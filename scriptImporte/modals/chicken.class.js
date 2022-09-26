@@ -14,16 +14,20 @@ class Chicken extends MovableObjekt {
 
     minSpeed = 1;
     maxSpeed = 5;
-    animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
-    movingSpeed = 160 / this.animationSpeed // for setting intervall
+    animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
+    movingSpeed = 160 / this.animationSpeed; // for setting intervall
 
     directionIndex = getRandomInt(3); // even for left; odd for right
     directionTime = 199;
     otherDirection = false;
+    id = Math.random();
 
-    energy = 10
-    damage = 10;
-    isDead = false
+    energy = 10;
+    damage = this.animationSpeed / 1.5;
+    isDead = false;
+    deadIndex = false;
+
+    SOUND_CHICKEN_DEAD = new Audio('audio/chickenDead.mp3');
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -35,41 +39,51 @@ class Chicken extends MovableObjekt {
     ]
 
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png')
-        this.loadImages(this.IMAGES_WALKING)
-        this.loadImages(this.IMAGES_DEATH)
-        this.moving()
-        this.proofAlive()
+        super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEATH);
+        this.moving();
+        this.proofAlive();
     }
 
 
     moving() {
-        setInterval(() => {
-            if (play) {
-                if (!this.isDead) {
-                    this.playAnimation(this.IMAGES_WALKING)
-                } else {
-                    this.playAnimation(this.IMAGES_DEATH)
-                }
-            }
-        }, this.movingSpeed)
+        setStoppableInterval(this.animate.bind(this), this.movingSpeed);
+        setStoppableInterval(this.direction.bind(this), intervall);
+    }
 
-        setInterval(() => {
-            if (play) {
-                if (!this.isDead) {
-                    this.directionTime += 1;
-                    if (this.directionIndex % 2) {
-                        this.moveRight()
-                        this.otherDirection = true;
-                    } else {
-                        this.moveLeft()
-                        this.otherDirection = false;
-                    }
-                } else {
-                    this.y += 5;
-                }
+
+    animate() {
+        if (play) {
+            if (!this.isDead) {
+                this.playAnimation(this.IMAGES_WALKING);
+            } else {
+                this.playAnimation(this.IMAGES_DEATH);
             }
-        }, 1000 / 60)
+        }
+
+    }
+
+
+    direction() {
+        if (play) {
+            if (!this.isDead) {
+                this.directionTime += 1;
+                if (this.directionIndex % 2) {
+                    this.moveRight();
+                    this.otherDirection = true;
+                } else {
+                    this.moveLeft();
+                    this.otherDirection = false;
+                }
+            } else if (!this.deadIndex) {
+                this.y += 5;
+                this.SOUND_CHICKEN_DEAD.play();
+            } if (this.y > this.gravityY + 200) {
+                this.SOUND_CHICKEN_DEAD.pause();
+                this.deadIndex = true;
+            }
+        }
     }
 }
 

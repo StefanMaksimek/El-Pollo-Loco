@@ -6,8 +6,8 @@ class BackgroundParts extends MovableObjekt {
 
 
     constructor(imgPath, x, y) {
-        super().loadImage(imgPath)
+        super().loadImage(imgPath);
         this.x = x;
-        this.y = y
+        this.y = y;
     }
 }

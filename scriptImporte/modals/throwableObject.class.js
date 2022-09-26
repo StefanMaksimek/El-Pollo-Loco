@@ -14,9 +14,9 @@ class ThrowableObject extends MovableObjekt {
     speedX = 20;
     speedY = 55;
     gravityY = canvasHeight - 250 * scalefactor - this.height;
-    accceleration = 10
+    accceleration = 10;
 
-    hit = false
+    hit = false;
 
     IMAGES_BOTTLE_ROTATE = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -46,20 +46,20 @@ class ThrowableObject extends MovableObjekt {
 
 
     throw(direction, walkLeft, walkRight) {
-        this.setMove(direction, walkLeft, walkRight)
-        this.setImages()
-        this.applyGravity(this.gravityY)
+        this.setMove(direction, walkLeft, walkRight);
+        this.setImages();
+        this.applyGravity(this.gravityY);
     }
 
 
     setImages() {
         setInterval(() => {
             if (this.y < this.gravityY && !this.hit) {
-                this.playAnimation(this.IMAGES_BOTTLE_ROTATE)
+                this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
             } else {
-                this.playAnimation(this.IMAGES_BOTTLE_SPLASH)
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
             }
-        }, 50)
+        }, 50);
     }
 
 
@@ -67,15 +67,15 @@ class ThrowableObject extends MovableObjekt {
         setInterval(() => {
             if (direction) {
                 if (walkLeft || walkRight) {
-                    this.x -= this.speedX + 15
+                    this.x -= this.speedX + 15;
                 } else {
-                    this.x -= this.speedX
+                    this.x -= this.speedX;
                 }
             } else {
                 if (walkLeft || walkRight) {
-                    this.x += this.speedX + 15
+                    this.x += this.speedX + 15;
                 } else {
-                    this.x += this.speedX
+                    this.x += this.speedX;
                 }
             }
         }, intervall);

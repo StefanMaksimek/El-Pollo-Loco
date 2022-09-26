@@ -1,5 +1,5 @@
 class World {
-    deebugmode = false;
+    deebugmode = true;
 
     ctx;
     canvas;
@@ -14,12 +14,17 @@ class World {
     level;
     cameraX;
     lastThrow;
+    playTime = 0;
+
+    SOUND_THROWING = new Audio('audio/throwing.mp3');
+    SOUND_HURT = new Audio('audio/hurt.mp3');
+    SOUND_ENDBOSS_HIT = new Audio('audio/chickenHit.mp3');
 
     constructor(canvas, keyboard) {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level1
-        this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d'); 
         this.setObjects();
         this.draw();
         this.setWorld();
@@ -51,19 +56,23 @@ class World {
 
 
     run() {
-        setInterval(() => {
-            if (play) {
-                this.pepeCollidingEnemies();
-                this.enemyCollidingPepe();
-                this.checkThrowing();
-                this.throwingBottleColliding();
-                this.coinColliding();
-                this.bottleColliding();
-                this.proofCharacterSeeBoss();
-                this.proofGameEnd();
-                this.deleteEnemiesIfdead();
-            }
-        }, 1);
+        setStoppableInterval(this.pepeCollidingEnemies.bind(this), 1);
+        setStoppableInterval(this.enemyCollidingPepe.bind(this), 1);
+        setStoppableInterval(this.checkThrowing.bind(this), 1);
+        setStoppableInterval(this.throwingBottleColliding.bind(this), 1);
+        setStoppableInterval(this.coinColliding.bind(this), 1);
+        setStoppableInterval(this.bottleColliding.bind(this), 1);
+        setStoppableInterval(this.proofCharacterSeeBoss.bind(this), 1);
+        setStoppableInterval(this.proofGameEnd.bind(this), 100);
+        setStoppableInterval(this.deleteEnemiesIfdead.bind(this), 1);
+        setStoppableInterval(this.playtimecounter.bind(this), 1000);
+    }
+
+
+    playtimecounter() {
+        if (play) {
+            this.playTime += 1;
+        }
     }
 
 
@@ -71,21 +80,20 @@ class World {
         this.level.enemies.forEach((enemy, i) => {
             if (enemy.deadTime > 100) {
                 this.level.enemies.splice(i, 1)
-                
             }
         })
         this.endboss.forEach((eb, i) => {
             if (eb.isDead && eb.animationIndex > 15) {
                 this.character.distanceToEndboss = 5000;
-                this.endboss.splice(i, 1)
+                this.endboss.splice(i, 1);
             }
         })
     }
 
 
     pepeCollidingEnemies() {
-        this.pepeColliding(this.level.enemies)
-        this.pepeColliding(this.endboss)
+        this.pepeColliding(this.level.enemies);
+        this.pepeColliding(this.endboss);
     }
 
     proofCharacterSeeBoss() {
@@ -97,28 +105,48 @@ class World {
             if (!eb.firstContact && eb.x - this.character.x < 1370) {
                 eb.firstContact = true;
             }
-        })   
+        })
     }
 
 
     proofGameEnd() {
-        if (this.character.energy <= 0) {
+        if (this.character.y >= canvasHeight) { // || exitHandler() && play
+            if (!exitHandler()) {
+                document.exitFullscreen();
+            }
             document.getElementById('canvas').style.display = 'none';
             document.getElementById('mobile-control').style.display = 'none';
             document.getElementById('start-img').style.display = 'flex';
             document.getElementById('start-img').innerHTML = `
             <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
             `;
+            stoppAllIntervalls();
         }
         if (this.endboss.length == 0) {
-            
+            let points = this.calculatePoints().toFixed(0);
+            if (!exitHandler()) {
+                document.exitFullscreen();
+            }
+            document.exitFullscreen();
+            document.getElementById('canvas').style.display = 'none';
+            document.getElementById('mobile-control').style.display = 'none';
+            document.getElementById('points-quantity').innerHTML = `${points}`;
+            document.getElementById('game-over').style.display = 'flex';
+            stoppAllIntervalls();
         }
     }
 
 
+    calculatePoints() {
+        return this.character.energy
+        * (this.bottleBar.bottles + this.coinBar.coins)
+        / this.playTime * 100;
+    }
+
+
     startNextLevel() {
-        this.deleteOldLevel()
-        this.renderNewLevel()
+        this.deleteOldLevel();
+        this.renderNewLevel();
     }
 
 
@@ -145,6 +173,7 @@ class World {
             this.lastThrow = new Date().getTime();
             this.character.idleCounter = 0;
             this.bottleBar.bottles--;
+            this.SOUND_THROWING.play();
         }
         if (!this.prooflastThrow(1000)) {
             this.throwableObject.splice(0, 1);
@@ -161,15 +190,16 @@ class World {
     pepeColliding(enemies) {
         enemies.forEach((enemy) => {
             if (this.isPepeColliding(enemy)) {
-                enemy.energy = 0
-                this.character.speedY = 15
+                enemy.energy = 0;
+                this.character.speedY = 15;
             } else if (this.wasPepeCollidding(enemy)) {
-                //this.drawableObject.characterEnergy -= enemy.damage
-                this.character.energy = this.drawableObject.characterEnergy
-                this.healthBar.setHealthBar(this.drawableObject.characterEnergy)
-                this.character.colliding = this.character.isColliding(enemy)
+                this.drawableObject.characterEnergy -= enemy.damage;
+                this.character.energy = this.drawableObject.characterEnergy;
+                this.healthBar.setHealthBar(this.drawableObject.characterEnergy);
+                this.character.colliding = this.character.isColliding(enemy);
+                this.SOUND_HURT.play();
                 if (enemy instanceof Endboss) {
-                    enemy.animationIndex = 0
+                    enemy.animationIndex = 0;
                 }
             }
         })
@@ -177,31 +207,38 @@ class World {
 
 
     wasPepeCollidding(enemy) {
-        return this.character.isColliding(enemy) 
-        && !this.character.proofCollidingTime() 
-        && !enemy.isDead
+        return this.character.isColliding(enemy)
+            && !this.character.proofCollidingTime()
+            && !enemy.isDead
     }
 
 
     isPepeColliding(enemy) {
-        return this.character.isColliding(enemy) 
-        && this.character.y < this.character.gravityY 
-        && (enemy instanceof Chicken || enemy instanceof SmallChicken) 
-        && !this.character.proofCollidingTime()
+        return this.character.isColliding(enemy)
+            && this.character.y < this.character.gravityY
+            && (enemy instanceof Chicken || enemy instanceof SmallChicken)
+            && !this.character.proofCollidingTime()
     }
 
 
     enemyCollidingPepe() {
         this.level.enemies.forEach(enemy => {
-            if ((enemy.isColliding(this.character) && !this.character.proofCollidingTime()
-                || enemy.x < 2 * - canvasWidth + 900
-                || enemy.x > bgCounter * canvasWidth - 1200)
-                && enemy.directionTime > 200) {
+            if (this.proofForChangeDirection(enemy)) {
                 enemy.directionIndex++;
                 enemy.directionTime = 0;
-                enemy.animationSpeed= enemy.animationSpeed + 1;
+                enemy.animationSpeed = enemy.animationSpeed + 1;
+                enemy.damage = enemy.animationSpeed / 2;
             }
         })
+    }
+
+
+    proofForChangeDirection(enemy) {
+        return (enemy.isColliding(this.character)
+            && !this.character.proofCollidingTime()
+            || enemy.x < 2 * - canvasWidth + 900
+            || enemy.x > bgCounter * canvasWidth - 1200)
+            && enemy.directionTime > 200
     }
 
 
@@ -209,15 +246,16 @@ class World {
         if (this.throwableObject.length > 0) {
             this.level.enemies.forEach(e => {
                 if (e.isColliding(this.throwableObject[0])) {
-                    e.energy -= 4
-                    this.throwableObject[0].hit = true
+                    e.energy -= 4;
+                    this.throwableObject[0].hit = true;
                 }
             })
             this.endboss.forEach((eb, i) => {
                 if (eb.isColliding(this.throwableObject[0])) {
-                    eb.energy -= 2
-                    this.throwableObject[0].hit = true
-                    this.endbossHealthBar[i].setHealthBar(eb.energy)
+                    this.SOUND_ENDBOSS_HIT.play();
+                    eb.energy -= 2;
+                    this.throwableObject[0].hit = true;
+                    this.endbossHealthBar[i].setHealthBar(eb.energy);
                     if (eb.animationIndex > 100 * levelIndex / 2) {
                         eb.animationIndex = 0;
                     }
@@ -230,7 +268,7 @@ class World {
     coinColliding() {
         this.coins.forEach((coin, i) => {
             if (coin.isColliding(this.character)) {
-                this.coins.splice(i, 1)
+                this.coins.splice(i, 1);
                 this.coinBar.coins++
             }
         })
@@ -240,8 +278,8 @@ class World {
     bottleColliding() {
         this.bottles.forEach((bottle, i) => {
             if (bottle.isColliding(this.character)) {
-                this.bottles.splice(i, 1)
-                this.bottleBar.bottles++
+                this.bottles.splice(i, 1);
+                this.bottleBar.bottles++;
             }
         });
     }
@@ -293,7 +331,6 @@ class World {
 
 
     setLevel() {
-        console.log('setLevel',bgCounter)
         let imageCounter = 0;
         for (let i = -4; i < bgCounter + 2; i++) {
             imageCounter++;
@@ -316,7 +353,7 @@ class World {
             new BackgroundParts(`img/5_background/layers/3_third_layer/${imageCounter}.png`, canvasWidth * i - 2 * i, 0),
             new BackgroundParts(`img/5_background/layers/2_second_layer/${imageCounter}.png`, canvasWidth * i - 2 * i, 0),
             new BackgroundParts(`img/5_background/layers/1_first_layer/${imageCounter}.png`, canvasWidth * i - 2 * i, 0),
-        )
+        );
     }
 
 
@@ -345,13 +382,12 @@ class World {
             this.level.enemies.push(
                 new Chicken(),
                 new SmallChicken(),
-            )      
+            )
         }
     }
 
 
     setObstacles() {
-        console.log('setObstacles',bgCounter)
         this.level.enemies.push(
             new BarbedWire(this.barbedWire.leftEnd, this.barbedWire.bottom),
             new BarbedWire(this.barbedWire.leftEnd + 160, this.barbedWire.bottom),
@@ -390,14 +426,14 @@ class World {
 
     addToMapp(mo) {
         if (mo.otherDirection) {
-            this.flipImage(mo)
+            this.flipImage(mo);
         }
         mo.draw(this.ctx)
         if (this.deebugmode) {
             mo.drawFrame(this.ctx);
         }
         if (mo.otherDirection) {
-            this.flipImageBack(mo)
+            this.flipImageBack(mo);
         }
     }
 

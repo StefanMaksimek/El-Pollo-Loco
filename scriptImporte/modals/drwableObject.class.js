@@ -5,7 +5,7 @@ class DrawableObject {
     leftEnd = 2 * - canvasWidth + 200;
     rightEnd = bgCounter * canvasWidth - 400;
 
-    
+
     x = 0;
     y = this.canvasHeight - this.height - this.walkLine;
 
@@ -22,13 +22,13 @@ class DrawableObject {
         this.img = new Image();
         this.img.src = path;
     }
-   
+
 
     /**
      * 
      * @param {Array} arr - ['./img/image1', './img/image2', './img/image3', ...]
      */
-     loadImages(arr) {
+    loadImages(arr) {
         arr.forEach(path => {
             let img = new Image();
             img.src = path;
@@ -43,19 +43,39 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = 'black';
-            ctx.stroke();
-        
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof Coin || this instanceof Bottle || this instanceof SmallChicken) {
-            ctx.beginPath();
-            ctx.rect(this.x + this.setCollisionX, this.y + this.setCollisionY, this.width - this.setCollisionWidth, this.height - this.setCollisionheigt);
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'red';
-            ctx.stroke();
+        this.drawOriginalSize(ctx);
+        if (this.isEnemy()) {
+            this.drawCalculatedFrame(ctx);
         }
+    }
+
+
+    drawOriginalSize(ctx) {
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    }
+
+
+    drawCalculatedFrame(ctx) {
+        ctx.beginPath();
+        ctx.rect(this.x + this.setCollisionX, this.y + this.setCollisionY, this.width - this.setCollisionWidth, this.height - this.setCollisionheigt);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+    }
+
+
+    isEnemy() {
+        return this instanceof Character
+            || this instanceof Chicken
+            || this instanceof Endboss
+            || this instanceof ThrowableObject
+            || this instanceof Coin
+            || this instanceof Bottle
+            || this instanceof SmallChicken
     }
 
 
@@ -71,34 +91,34 @@ class DrawableObject {
         let characterXright = this.x + this.setCollisionX + this.width - this.setCollisionWidth;
 
         return characterXright > enemyXleft &&
-        characterXright < enemyXright &&
-        characterYbottom > enemyYtop &&
-        characterYbottom < enemyYbottom
-        ||
-        characterXright > enemyXleft &&
-        characterXright < enemyXright &&
-        characterYtop > enemyYtop &&
-        characterYtop < enemyYbottom
-        ||
-        characterXleft > enemyXleft &&
-        characterXleft < enemyXright &&
-        characterYtop > enemyYtop &&
-        characterYtop < enemyYbottom
-        ||
-        characterXleft > enemyXleft &&
-        characterXleft < enemyXright &&
-        characterYbottom > enemyYtop &&
-        characterYbottom < enemyYbottom
-        ||
-        enemyYtop > characterYtop &&
-        enemyYbottom < characterYbottom &&
-        enemyXleft > characterXleft &&
-        enemyXleft < characterXright
-        ||
-        enemyYtop > characterYtop &&
-        enemyYbottom < characterYbottom &&
-        enemyXright > characterXleft &&
-        enemyXright < characterXright
+            characterXright < enemyXright &&
+            characterYbottom > enemyYtop &&
+            characterYbottom < enemyYbottom
+            ||
+            characterXright > enemyXleft &&
+            characterXright < enemyXright &&
+            characterYtop > enemyYtop &&
+            characterYtop < enemyYbottom
+            ||
+            characterXleft > enemyXleft &&
+            characterXleft < enemyXright &&
+            characterYtop > enemyYtop &&
+            characterYtop < enemyYbottom
+            ||
+            characterXleft > enemyXleft &&
+            characterXleft < enemyXright &&
+            characterYbottom > enemyYtop &&
+            characterYbottom < enemyYbottom
+            ||
+            enemyYtop > characterYtop &&
+            enemyYbottom < characterYbottom &&
+            enemyXleft > characterXleft &&
+            enemyXleft < characterXright
+            ||
+            enemyYtop > characterYtop &&
+            enemyYbottom < characterYbottom &&
+            enemyXright > characterXleft &&
+            enemyXright < characterXright
     }
 
     /** Is not working!!!

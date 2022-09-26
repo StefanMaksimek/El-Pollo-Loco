@@ -26,8 +26,13 @@ class SmallChicken extends MovableObjekt {
     otherDirection = false;
 
     energy = 10
-    damage = 5;
+    damage = this.animationSpeed / 2
     isDead = false
+    deadIndex = false;
+
+    objectIntervallIds = [];
+
+    SOUND_CHICKEN_DEAD = new Audio('audio/chickenDead.mp3');
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -36,30 +41,30 @@ class SmallChicken extends MovableObjekt {
     ];
     IMAGES_DEATH = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png',
-    ]
+    ];
 
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
-        this.loadImages(this.IMAGES_WALKING)
-        this.loadImages(this.IMAGES_DEATH)
-        this.applyGravity(this.gravityY)
-        this.moving()
-        this.proofAlive()
+        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEATH);
+        this.applyGravity(this.gravityY);
+        this.moving();
+        this.proofAlive();
     }
 
 
     moving() {
-            setStoppableInterval(this.animate.bind(this), this.movingSpeed)
-            setStoppableInterval(this.direction.bind(this), intervall)
+            setStoppableInterval(this.animate.bind(this), this.movingSpeed);
+            setStoppableInterval(this.direction.bind(this), intervall);
     }
 
 
     animate() {
         if (play) {
             if (!this.isDead) {
-                this.playAnimation(this.IMAGES_WALKING)
+                this.playAnimation(this.IMAGES_WALKING);
             } else {
-                this.playAnimation(this.IMAGES_DEATH)
+                this.playAnimation(this.IMAGES_DEATH);
             }
         }
        
@@ -71,16 +76,20 @@ class SmallChicken extends MovableObjekt {
             if (!this.isDead) {
                 this.directionTime += 1;
                 if (this.directionIndex % 2) {
-                    this.moveRight()
-                    this.setJumpImpulse()
+                    this.moveRight();
+                    this.setJumpImpulse();
                     this.otherDirection = true;
                 } else {
-                    this.moveLeft()
-                    this.setJumpImpulse()
+                    this.moveLeft();
+                    this.setJumpImpulse();
                     this.otherDirection = false;
                 }
-            } else {
+            } else if (!this.deadIndex) {
                 this.y += 5;
+                this.SOUND_CHICKEN_DEAD.play();
+            } if (this.y > this.gravityY + 200) {
+                this.SOUND_CHICKEN_DEAD.pause();
+                this.deadIndex = true;
             }
         }
     }
@@ -88,13 +97,13 @@ class SmallChicken extends MovableObjekt {
 
     setJumpImpulse() {
         if (this.y == this.gravityY) {
-            this.jumpCounter += 0.5
+            this.jumpCounter += 0.5;
         }
         if (this.jumpCounter > this.jumpImpuls ) {
-            this.jump(this.jumpPower)
-            this.jumpCounter = 0
-            this.jumpImpuls = getRandomArbitrary(50, 120)
-            this.jumpPower = getRandomArbitrary(50, 90)
+            this.jump(this.jumpPower);
+            this.jumpCounter = 0;
+            this.jumpImpuls = getRandomArbitrary(50, 120);
+            this.jumpPower = getRandomArbitrary(50, 90);
         }
     }
 }
