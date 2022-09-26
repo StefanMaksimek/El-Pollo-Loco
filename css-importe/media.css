@@ -1,4 +1,4 @@
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1250px) {
 
     .content {
         flex-direction: column;
@@ -31,11 +31,47 @@
         flex-direction: column;
     }
 
+    li {
+        margin: 0;
+        list-style: none;
+        padding: 0px 0px 16px 54px;
+        background-repeat: no-repeat;
+        background-position: inherit;
+        background-size: 30px;
+    }
 }
 
 
 @media screen and (max-width: 380px) {
     .box {
         padding: 0;
+    }
+}
+
+
+@media screen and (max-height: 680px) and (orientation: landscape) {
+    .content {
+        flex-direction: row;
+    }
+
+    .box {
+        flex-direction: column;
+    }
+
+    .box1 {
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-height: 680px) {
+
+    li {
+        margin: 0;
+        list-style: none;
+        padding: 0px 0px 16px 54px;
+        background-repeat: no-repeat;
+        background-position: inherit;
+        background-size: 30px;
     }
 }

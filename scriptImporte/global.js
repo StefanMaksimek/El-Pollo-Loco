@@ -9,7 +9,7 @@ let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the ga
 let FPS = 60;
 let intervall = 1000 / FPS;
 
-let intervallIds = []; // Arrey to stopp all intervalls 
+let intervalIds = []; // Arrey to stopp all intervalls 
 
 let levelIndex = 1; // Integer for setting enemies in level
 let bgCounter = 7;

@@ -30,8 +30,6 @@ class SmallChicken extends MovableObjekt {
     isDead = false
     deadIndex = false;
 
-    objectIntervallIds = [];
-
     SOUND_CHICKEN_DEAD = new Audio('audio/chickenDead.mp3');
 
     IMAGES_WALKING = [

@@ -17,6 +17,9 @@ class ThrowableObject extends MovableObjekt {
     accceleration = 10;
 
     hit = false;
+    splashTime = 0;
+
+    SOUND_SPLASH = new Audio('audio/bottlesplash.mp3')
 
     IMAGES_BOTTLE_ROTATE = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -38,9 +41,9 @@ class ThrowableObject extends MovableObjekt {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.x = x - this.width * 0.5;
         this.y = y;
-        this.throw(direction, walkLeft, walkRight)
-        this.loadImages(this.IMAGES_BOTTLE_ROTATE)
-        this.loadImages(this.IMAGES_BOTTLE_SPLASH)
+        this.throw(direction, walkLeft, walkRight);
+        this.loadImages(this.IMAGES_BOTTLE_ROTATE);
+        this.loadImages(this.IMAGES_BOTTLE_SPLASH);
 
     }
 
@@ -49,11 +52,12 @@ class ThrowableObject extends MovableObjekt {
         this.setMove(direction, walkLeft, walkRight);
         this.setImages();
         this.applyGravity(this.gravityY);
+        this.setAudio();
     }
 
 
     setImages() {
-        setInterval(() => {
+       let id = setInterval(() => {
             if (this.y < this.gravityY && !this.hit) {
                 this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
             } else {
@@ -63,8 +67,22 @@ class ThrowableObject extends MovableObjekt {
     }
 
 
+    setAudio() {
+        let id = setInterval(() => {
+            if ((this.hit || this.y >= this.gravityY) && this.splashTime < 20) {
+                this.SOUND_SPLASH.play();
+                this.splashTime++;
+            }
+            if (this.splashTime > 200) {
+                clearInterval(id);
+            }
+        }, 1);
+        intervalIds.push(id);
+    }
+
+
     setMove(direction, walkLeft, walkRight) {
-        setInterval(() => {
+       let id = setInterval(() => {
             if (direction) {
                 if (walkLeft || walkRight) {
                     this.x -= this.speedX + 15;
@@ -79,5 +97,6 @@ class ThrowableObject extends MovableObjekt {
                 }
             }
         }, intervall);
+        intervalIds.push(id)
     }
 }

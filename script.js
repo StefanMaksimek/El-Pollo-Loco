@@ -109,8 +109,15 @@ document.getElementById('m-space').addEventListener('touchend', e => {
     keyboard.space = false;
 })
 
+function setMobileControle() {
+    document.getElementById('mobile-control').style.display = 'flex';
+}
+
 
 function startGame() {
+    if ('ontouchstart' in window) {
+        setTimeout(setMobileControle(), 1000);
+    }
     if (!play) {
         fullscreen();
         document.getElementById('start-img').style.display = 'none';
@@ -118,12 +125,7 @@ function startGame() {
         document.getElementById('start').innerHTML = `Neu Laden`;
         play = true
     } else {
-        window.location.reload();
-        
-    }
-
-    if ('ontouchstart' in window) {
-        document.getElementById('mobile-control').style.display = 'flex';
+        window.location.reload();   
     }
 }
 
@@ -154,12 +156,12 @@ function fullscreen() {
 */
 function setStoppableInterval(fn, t) {
     let id = setInterval(fn, t);
-    intervallIds.push(id);
+    intervalIds.push(id);
 }
 
 
 function stoppAllIntervalls() {
-    intervallIds.forEach(clearInterval);
+    intervalIds.forEach(clearInterval);
 }
 
 

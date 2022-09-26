@@ -1,5 +1,5 @@
 class World {
-    deebugmode = true;
+    deebugmode = false;
 
     ctx;
     canvas;
@@ -19,6 +19,9 @@ class World {
     SOUND_THROWING = new Audio('audio/throwing.mp3');
     SOUND_HURT = new Audio('audio/hurt.mp3');
     SOUND_ENDBOSS_HIT = new Audio('audio/chickenHit.mp3');
+    SOUND_GAME_OVER = new Audio('audio/gameover.mp3');
+    SOUND_COIN_COLLECT = new Audio('audio/coin_collect.mp3');
+    SOUND_BOTTLE_COLLECT = new Audio('audio/botle_collect.mp3');
 
     constructor(canvas, keyboard) {
         this.canvas = canvas;
@@ -110,6 +113,9 @@ class World {
 
 
     proofGameEnd() {
+        if (this.character.energy <= 0) {
+            this.SOUND_GAME_OVER.play();
+        }
         if (this.character.y >= canvasHeight) { // || exitHandler() && play
             if (!exitHandler()) {
                 document.exitFullscreen();
@@ -270,6 +276,8 @@ class World {
             if (coin.isColliding(this.character)) {
                 this.coins.splice(i, 1);
                 this.coinBar.coins++
+                this.SOUND_COIN_COLLECT.loop = false;
+                this.SOUND_COIN_COLLECT.play();
             }
         })
     }
@@ -280,6 +288,8 @@ class World {
             if (bottle.isColliding(this.character)) {
                 this.bottles.splice(i, 1);
                 this.bottleBar.bottles++;
+                this.SOUND_BOTTLE_COLLECT.loop = false;
+                this.SOUND_BOTTLE_COLLECT.play();
             }
         });
     }
