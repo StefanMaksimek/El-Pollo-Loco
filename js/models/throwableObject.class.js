@@ -1,7 +1,7 @@
 class ThrowableObject extends MovableObjekt {
     world;
-    x = 100
-    y = canvasHeight - 300
+    x = 100;
+    y = canvasHeight - 300;
 
     width = 400 * scalefactor;
     height = 400 * scalefactor;
@@ -49,7 +49,7 @@ class ThrowableObject extends MovableObjekt {
 
 
     throw(direction, walkLeft, walkRight) {
-        this.setMove(direction, walkLeft, walkRight);
+        this.setThrow(direction, walkLeft, walkRight);
         this.setImages();
         this.applyGravity(this.gravityY);
         this.setAudio();
@@ -64,6 +64,7 @@ class ThrowableObject extends MovableObjekt {
                 this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
             }
         }, 50);
+        intervalIds.push(id);
     }
 
 
@@ -81,22 +82,32 @@ class ThrowableObject extends MovableObjekt {
     }
 
 
-    setMove(direction, walkLeft, walkRight) {
-       let id = setInterval(() => {
-            if (direction) {
-                if (walkLeft || walkRight) {
-                    this.x -= this.speedX + 15;
-                } else {
-                    this.x -= this.speedX;
-                }
-            } else {
-                if (walkLeft || walkRight) {
-                    this.x += this.speedX + 15;
-                } else {
-                    this.x += this.speedX;
-                }
-            }
-        }, interval);
-        intervalIds.push(id)
-    }
+    setThrow(direction, walkLeft, walkRight) {
+        let id = setInterval(() => {
+             if (direction) {
+                 this.throwLeft(walkLeft);
+             } else {
+                 this.throwRight(walkRight);
+             }
+         }, interval);
+         intervalIds.push(id)
+     }
+
+
+     throwLeft(walkLeft) {
+        if (walkLeft) {
+            this.x -= this.speedX + 15;
+        } else {
+            this.x -= this.speedX;
+        }
+     }
+
+
+     throwRight(walkRight) {
+        if (walkRight) {
+            this.x += this.speedX + 15;
+        } else {
+            this.x += this.speedX;
+        }
+     }
 }

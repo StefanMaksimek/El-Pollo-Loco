@@ -129,6 +129,7 @@ class World {
         if (!exitHandler()) {
             document.exitFullscreen();
         }
+        document.getElementById('fullscreen').style.display = 'none';
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('mobile-control').style.display = 'none';
         document.getElementById('start-img').style.display = 'flex';
@@ -144,6 +145,7 @@ class World {
             if (!exitHandler()) {
                 document.exitFullscreen();
             }
+            document.getElementById('fullscreen').style.display = 'none';
             document.getElementById('canvas').style.display = 'none';
             document.getElementById('mobile-control').style.display = 'none';
             document.getElementById('points-quantity').innerHTML = `${points}`;
@@ -182,17 +184,28 @@ class World {
 
 
     checkThrowing() {
+        let x = this.character.x + this.character.width * 0.5;
+        let y = this.character.y + this.character.height * 0.5;
+        let directionLeft = this.character.otherDirection;
+        let left = this.keyboard.left
+        let right = this.keyboard.right
         if (this.keyboard.d && !this.prooflastThrow(1001) && this.bottleBar.bottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + this.character.width * 0.5, this.character.y + this.character.height * 0.5, this.character.otherDirection, this.keyboard.left, this.keyboard.right)
+            this.letBottleThrow(x, y, directionLeft, left, right)
+        }
+        if (!this.prooflastThrow(1000)) {
+            this.throwableObject.splice(0, 1);
+        }
+    }
+
+
+    letBottleThrow(x, y, directionLeft, left, right) {
+        let bottle = new ThrowableObject(x, y, directionLeft, left, right)
+
             this.throwableObject.push(bottle);
             this.lastThrow = new Date().getTime();
             this.character.idleCounter = 0;
             this.bottleBar.bottles--;
             this.SOUND_THROWING.play();
-        }
-        if (!this.prooflastThrow(1000)) {
-            this.throwableObject.splice(0, 1);
-        }
     }
 
 

@@ -117,22 +117,75 @@ function setMobileControle() {
 function startGame() {
     if ('ontouchstart' in window) {
         setTimeout(setMobileControle(), 1000);
-        
-    }
-    if (!play) {
-        fullscreen();
-        document.getElementById('start-img').style.display = 'none';
-        document.getElementById('canvas').style.display = 'flex';
-        document.getElementById('start').innerHTML = `Neu Laden`;
-        play = true
-        
+        fullscreenMobile()
+
     } else {
-        window.location.reload();   
+        fullscreenDesktop();
+        closeRest()
+        document.getElementById('canvas').style.display = 'flex';
     }
+
+    document.getElementById('start').innerHTML = `Neu Laden`;
+    document.getElementById('start').setAttribute("onClick", "reload()");
+    play = true
 }
 
 
-function fullscreen() {
+function openMobileFullscreen() {
+    fullscreenMobile()
+    document.getElementById('fullscreen').innerHTML =`
+        <img onclick="closeMobileFullscreen()" src="img/new_items/exit_fullscreen.png" alt="">
+    `;
+}
+
+
+function closeMobileFullscreen() {
+    document.getElementById('fullscreen').innerHTML =`
+        <img onclick="openMobileFullscreen()" src="img/new_items/enter_fullscreen.png" alt="">
+    `;
+    
+    document.getElementById('info').style.display = 'flex';
+    document.getElementById('mobile-control').style.display = 'flex';
+    document.getElementById('canvas').className = "";
+    document.getElementById('canvas').style.display = 'flex';
+}
+
+
+function openSettings() {
+    world.endGameShowLoseIMG();
+    closeRest();
+    document.getElementById('settings').style.display = 'flex';
+}
+
+
+function openMusic() {
+    world.endGameShowLoseIMG();
+    closeRest();
+    document.getElementById('music').style.display = 'flex';
+}
+
+
+function openBestPlayer() {
+    world.endGameShowLoseIMG();
+    closeRest();
+    document.getElementById('best-player').style.display = 'flex';
+}
+
+
+function closeRest() {
+    document.getElementById('start-img').style.display = 'none';
+    document.getElementById('best-player').style.display = 'none';
+    document.getElementById('music').style.display = 'none';
+    document.getElementById('settings').style.display = 'none';
+}
+
+
+function reload() {
+    window.location.reload();
+}
+
+
+function fullscreenDesktop() {
 
     let elem = document.getElementById('canvas');
 
@@ -147,6 +200,16 @@ function fullscreen() {
     } else if (elem.webkitEnterFullScreen) {
         elem.webkitEnterFullScreen();
     }
+}
+
+
+function fullscreenMobile() {
+    document.getElementById('start-img').style.display = 'none';
+    document.getElementById('info').style.display = 'none';
+    document.getElementById('mobile-control').style.display = 'flex';
+    document.getElementById('fullscreen').style.display = 'flex';
+    document.getElementById('canvas').classList.add('mobile-canvas');
+    document.getElementById('content').className = 'mobile-fullscreen';
 }
 
 
@@ -187,18 +250,4 @@ function exitHandler() {
     } else {
         return false
     }
-} 
-
-/////////////////////////////////////////////
-// Testing Code
-
-function lockOriantationLandscape() {
-    let de = document.documentElement;
-
-    if (de.requestFullscreen) { de.requestFullscreen(); }
-    else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
-    else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
-    else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
-
-    screen.orientation.lock('landscape')
 }

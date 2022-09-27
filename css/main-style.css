@@ -42,12 +42,7 @@ h1 {
     justify-content: space-around;
 }
 
-.start {
-    position: relative;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-}
+
 
 .start-img {
     position: relative;
@@ -129,11 +124,24 @@ h1 {
 }
 
 .info {
-    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.settings, .music, .best-player  {
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 0.2rem;
+    box-shadow: 1px 1px 5px 2px rgb(0 0 0 / 30%);
+    max-width: 76vw;
+    max-height: 90vh;
 }
 
 canvas {
@@ -146,27 +154,10 @@ canvas {
     max-height: 90vh;
 }
 
-.mobile-control {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0.5rem;
-    display: none;
-    justify-content: space-between;
-}
 
-.mobile-control img {
-    height: 10vh;
-    width: 10vh;
-    margin: 1rem;
-    border-radius: none;
-    box-shadow: none;
-}
 
 .box {
     padding-right: 1rem;
-    margin-bottom: 1rem;
     background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 0.2rem;
