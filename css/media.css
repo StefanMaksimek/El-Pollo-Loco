@@ -1,5 +1,4 @@
 @media screen and (max-width: 1250px) {
-
     .content {
         flex-direction: column;
         align-items: center;
@@ -20,7 +19,6 @@
 
 
 @media screen and (max-width: 680px) {
-
     .content {
         flex-direction: column;
         align-items: center;
@@ -64,11 +62,7 @@
 }
 
 
-
-
-
 @media screen and (max-height: 680px) {
-
     li {
         margin: 0;
         list-style: none;

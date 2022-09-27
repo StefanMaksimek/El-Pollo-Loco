@@ -147,6 +147,7 @@ function closeMobileFullscreen() {
     document.getElementById('info').style.display = 'flex';
     document.getElementById('mobile-control').style.display = 'flex';
     document.getElementById('canvas').className = "";
+    document.getElementById('content').className = "content";
     document.getElementById('canvas').style.display = 'flex';
 }
 
