@@ -117,6 +117,7 @@ function setMobileControle() {
 function startGame() {
     if ('ontouchstart' in window) {
         setTimeout(setMobileControle(), 1000);
+        
     }
     if (!play) {
         fullscreen();
@@ -124,6 +125,7 @@ function startGame() {
         document.getElementById('canvas').style.display = 'flex';
         document.getElementById('start').innerHTML = `Neu Laden`;
         play = true
+        
     } else {
         window.location.reload();   
     }
@@ -186,3 +188,17 @@ function exitHandler() {
         return false
     }
 } 
+
+/////////////////////////////////////////////
+// Testing Code
+
+function lockOriantationLandscape() {
+    let de = document.documentElement;
+
+    if (de.requestFullscreen) { de.requestFullscreen(); }
+    else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
+    else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
+    else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
+
+    screen.orientation.lock('landscape')
+}

@@ -1,4 +1,4 @@
-class SmallChicken extends MovableObjekt {
+class Chicken extends MovableObjekt {
     height = 243 * scalefactor;
     width = 248 * scalefactor;
 
@@ -12,48 +12,44 @@ class SmallChicken extends MovableObjekt {
     setCollisionWidth = 0 * scalefactor;
     setCollisionheigt = 40 * scalefactor;
 
-    minSpeed = 0.8;
-    maxSpeed = 4;
-    animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed)
-    movingSpeed = 160 / this.animationSpeed // for setting intervall
-    jumpImpuls = getRandomArbitrary(30, 80)
-    jumpCounter = 0;
-    jumpPower = getRandomArbitrary(50, 90)
-    accceleration = 10
+    minSpeed = 1;
+    maxSpeed = 5;
+    animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
+    movingSpeed = 160 / this.animationSpeed; // for setting interval
 
     directionIndex = getRandomInt(3); // even for left; odd for right
-    directionTime = 0;
+    directionTime = 199;
     otherDirection = false;
+    id = Math.random();
 
-    energy = 10
-    damage = this.animationSpeed / 2
-    isDead = false
+    energy = 10;
+    damage = this.animationSpeed / 1.5;
+    isDead = false;
     deadIndex = false;
 
     SOUND_CHICKEN_DEAD = new Audio('audio/chickenDead.mp3');
 
     IMAGES_WALKING = [
-        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
-        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
-        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
+        'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ];
-    IMAGES_DEATH = [
-        'img/3_enemies_chicken/chicken_small/2_dead/dead.png',
-    ];
+    IMAGES_DEAD = [
+        'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+    ]
 
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+        super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_DEATH);
-        this.applyGravity(this.gravityY);
+        this.loadImages(this.IMAGES_DEAD);
         this.moving();
         this.proofAlive();
     }
 
 
     moving() {
-            setStoppableInterval(this.animate.bind(this), this.movingSpeed);
-            setStoppableInterval(this.direction.bind(this), intervall);
+        setStoppableInterval(this.animate.bind(this), this.movingSpeed);
+        setStoppableInterval(this.direction.bind(this), interval);
     }
 
 
@@ -62,10 +58,10 @@ class SmallChicken extends MovableObjekt {
             if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
-                this.playAnimation(this.IMAGES_DEATH);
+                this.playAnimation(this.IMAGES_DEAD);
             }
         }
-       
+
     }
 
 
@@ -75,11 +71,9 @@ class SmallChicken extends MovableObjekt {
                 this.directionTime += 1;
                 if (this.directionIndex % 2) {
                     this.moveRight();
-                    this.setJumpImpulse();
                     this.otherDirection = true;
                 } else {
                     this.moveLeft();
-                    this.setJumpImpulse();
                     this.otherDirection = false;
                 }
             } else if (!this.deadIndex) {
@@ -91,17 +85,6 @@ class SmallChicken extends MovableObjekt {
             }
         }
     }
-
-
-    setJumpImpulse() {
-        if (this.y == this.gravityY) {
-            this.jumpCounter += 0.5;
-        }
-        if (this.jumpCounter > this.jumpImpuls ) {
-            this.jump(this.jumpPower);
-            this.jumpCounter = 0;
-            this.jumpImpuls = getRandomArbitrary(50, 120);
-            this.jumpPower = getRandomArbitrary(50, 90);
-        }
-    }
 }
+
+

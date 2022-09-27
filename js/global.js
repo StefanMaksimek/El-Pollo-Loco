@@ -7,7 +7,7 @@ let sizeVariable = 2; // Resizing of characters and items
 let scalefactor = 1 / sizeVariable; // Resizing of all objects related to the game window to the original image height
 
 let FPS = 60;
-let intervall = 1000 / FPS;
+let interval = 1000 / FPS;
 
 let intervalIds = []; // Arrey to stopp all intervalls 
 

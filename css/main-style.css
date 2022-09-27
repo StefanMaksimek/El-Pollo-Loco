@@ -50,7 +50,10 @@ h1 {
 }
 
 .start-img {
+    position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     max-width: 76vw;
     max-height: 90vh;
 }
@@ -60,6 +63,20 @@ h1 {
     object-fit: contain;
     border-radius: 0.2rem;
     box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.304);
+}
+
+#play-btn {
+    position: absolute;
+    height: 20%;
+    width: 10%;
+    border-radius: none;
+    box-shadow: none;
+    opacity: 80%;
+}
+
+#play-btn:hover {
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 .explain {

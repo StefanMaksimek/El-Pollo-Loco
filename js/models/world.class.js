@@ -116,30 +116,39 @@ class World {
         if (this.character.energy <= 0) {
             this.SOUND_GAME_OVER.play();
         }
-        if (this.character.y >= canvasHeight) { // || exitHandler() && play
-            if (!exitHandler()) {
-                document.exitFullscreen();
-            }
-            document.getElementById('canvas').style.display = 'none';
-            document.getElementById('mobile-control').style.display = 'none';
-            document.getElementById('start-img').style.display = 'flex';
-            document.getElementById('start-img').innerHTML = `
-            <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
-            `;
-            stoppAllIntervalls();
+        if (this.character.y >= canvasHeight) { 
+            this.endGameShowLoseIMG();
         }
         if (this.endboss.length == 0) {
-            let points = this.calculatePoints().toFixed(0);
+            this.endGameShowWinScreen();
+        }
+    }
+
+
+    endGameShowLoseIMG() {
+        if (!exitHandler()) {
+            document.exitFullscreen();
+        }
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('mobile-control').style.display = 'none';
+        document.getElementById('start-img').style.display = 'flex';
+        document.getElementById('start-img').innerHTML = `
+        <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
+        `;
+        stoppAllIntervalls();
+    }
+
+
+    endGameShowWinScreen() {
+        let points = this.calculatePoints().toFixed(0);
             if (!exitHandler()) {
                 document.exitFullscreen();
             }
-            document.exitFullscreen();
             document.getElementById('canvas').style.display = 'none';
             document.getElementById('mobile-control').style.display = 'none';
             document.getElementById('points-quantity').innerHTML = `${points}`;
             document.getElementById('game-over').style.display = 'flex';
             stoppAllIntervalls();
-        }
     }
 
 

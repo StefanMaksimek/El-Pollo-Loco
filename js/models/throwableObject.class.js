@@ -96,7 +96,7 @@ class ThrowableObject extends MovableObjekt {
                     this.x += this.speedX;
                 }
             }
-        }, intervall);
+        }, interval);
         intervalIds.push(id)
     }
 }

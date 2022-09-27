@@ -19,9 +19,9 @@ class Character extends MovableObjekt {
     animationSpeed = 15;
     jumpPower = 90;
     accceleration = 10;
-    idleCounter = 0
+    idleCounter = 0;
 
-    distanceToEndboss = 5000
+    distanceToEndboss = 5000;
 
     SOUND_WALKING = new Audio('audio/157038_2835342-lq (mp3cut.net).mp3');
     SOUND_JUMP = new Audio('audio/jump.mp3');
@@ -111,7 +111,7 @@ class Character extends MovableObjekt {
 
     setIntervals() {
         setStoppableInterval(this.playAudio.bind(this), 100);
-        setStoppableInterval(this.setMove.bind(this), intervall);
+        setStoppableInterval(this.setMove.bind(this), interval);
         setStoppableInterval(this.setImages.bind(this), 150);
     }
 
@@ -145,7 +145,7 @@ class Character extends MovableObjekt {
 
     setImages() {
         if (this.isDead) {
-            this.playAnimationDeath();
+            this.playAnimationDead();
         } else if (this.colliding) {
             this.playAnimationHurt();
         } else if (this.isAboveGround(this.gravityY)) {
@@ -164,7 +164,7 @@ class Character extends MovableObjekt {
     }
 
 
-    playAnimationDeath() {
+    playAnimationDead() {
         this.playAnimation(this.IMAGES_DEAD);
         if (!this.proofCollidingTime()) {
             this.y -= 30;
