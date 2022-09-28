@@ -1,9 +1,9 @@
 class Keyboard {
-    right = false;
-    left = false;
-    space = false;
-    d = false;
+  right = false;
+  left = false;
+  space = false;
+  d = false;
 
-    esc = false;
-    shift = false;
+  esc = false;
+  shift = false;
 }
