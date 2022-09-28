@@ -240,7 +240,8 @@ class World {
     enemies.forEach((enemy) => {
       if (this.isPepeColliding(enemy)) {
         enemy.energy = 0;
-        this.character.speedY = 15;
+        enemy.isDead = true;
+        this.character.speedY = 30;
       } else if (this.wasPepeColliding(enemy)) {
         this.pepeHitEnemy(enemy);
         this.character.lastHit = new Date().getTime();
@@ -264,7 +265,8 @@ class World {
       this.character.isColliding(enemy) &&
       this.character.y < this.character.gravityY &&
       (enemy instanceof Chicken || enemy instanceof SmallChicken) &&
-      !this.character.isHurt()
+      !this.character.isHurt() &&
+      this.character.speedY < -10
     );
   }
 
@@ -511,9 +513,33 @@ class World {
   }
 
   setBottles() {
+    let preBottlesTEST = [];
     for (let i = 0; i < 6 * bgCounter; i++) {
-      this.bottles.push(new Bottle());
+      preBottlesTEST.push(new Bottle());
     }
+    preBottlesTEST.forEach((b) => {
+      if (
+        b.x < this.character.x - 400 ||
+        b.x > this.character.x + this.character.width + 400
+      ) {
+        this.bottles.push(b);
+      }
+    });
+  }
+
+  setCoins() {
+    let preCoinsTEST = [];
+    for (let i = 0; i < 6 * bgCounter; i++) {
+      preCoinsTEST.push(new Coin());
+    }
+    preCoinsTEST.forEach((c) => {
+      if (
+        c.x < this.character.x - 400 ||
+        c.x > this.character.x + this.character.width + 400
+      ) {
+        this.coins.push(c);
+      }
+    });
   }
 
   addToMapp(mo) {

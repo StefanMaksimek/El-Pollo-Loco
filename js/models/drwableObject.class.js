@@ -92,6 +92,7 @@ class DrawableObject {
       this.x + this.setCollisionX + this.width - this.setCollisionWidth;
 
     return (
+      /** 
       (characterXright > enemyXleft &&
         characterXright < enemyXright &&
         characterYbottom > enemyYtop &&
@@ -116,10 +117,12 @@ class DrawableObject {
         enemyYbottom < characterYbottom &&
         enemyXright > characterXleft &&
         enemyXright < characterXright) ||
-      (enemyXleft < characterXright &&
-        enemyXright > characterXleft &&
-        enemyYtop < characterYbottom &&
-        enemyYbottom > characterYtop)
+*/
+
+      enemyXleft < characterXright &&
+      enemyXright > characterXleft &&
+      enemyYtop < characterYbottom &&
+      enemyYbottom > characterYtop
     );
   }
 
