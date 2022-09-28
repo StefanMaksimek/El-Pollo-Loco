@@ -120,7 +120,11 @@ function startGame() {
         fullscreenMobile()
 
     } else {
-        fullscreenDesktop();
+        //fullscreenDesktop();
+        document.getElementById('fullscreen').style.display = 'flex';
+        document.getElementById('fullscreen').innerHTML =`
+        <img onclick="fullscreenDesktop()" src="img/new_items/enter_fullscreen.png" alt="">
+    `;
         closeRest()
         document.getElementById('canvas').style.display = 'flex';
     }

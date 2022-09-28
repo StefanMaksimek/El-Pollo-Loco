@@ -43,7 +43,6 @@ h1 {
 }
 
 .start {
-    margin-top: 1rem;
     position: relative;
     display: flex;
     justify-content: center;
@@ -221,6 +220,15 @@ li.a:hover {
     left: 0;
     right: 0;
     justify-content: space-between;
+    height: 18%;
+}
+
+.mobile-left {
+    display: flex;
+}
+
+#m-left, #m-d {
+    margin-right: 2rem;
 }
 
 .mobile-right {
@@ -230,7 +238,7 @@ li.a:hover {
 
 .mobile-control img {
     padding: 0.5rem;
-    width: 25%;
+    object-fit: contain;
 }
 
 .mobile-canvas {

@@ -113,6 +113,11 @@ class World {
 
 
     proofGameEnd() {
+        if (!exitHandler()) {
+            document.querySelector('body').style = 'cursor: none;';
+        } else {
+            document.querySelector('body').style = 'cursor: default;';
+        }
         if (this.character.energy <= 0) {
             this.SOUND_GAME_OVER.play();
         }
@@ -128,6 +133,7 @@ class World {
     endGameShowLoseIMG() {
         if (!exitHandler()) {
             document.exitFullscreen();
+            document.querySelector('body').style = 'cursor: default;';
         }
         document.getElementById('fullscreen').style.display = 'none';
         document.getElementById('canvas').style.display = 'none';
@@ -144,6 +150,7 @@ class World {
         let points = this.calculatePoints().toFixed(0);
             if (!exitHandler()) {
                 document.exitFullscreen();
+                document.querySelector('body').style = 'cursor: default;';
             }
             document.getElementById('fullscreen').style.display = 'none';
             document.getElementById('canvas').style.display = 'none';

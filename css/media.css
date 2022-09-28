@@ -12,6 +12,10 @@
         display: flex;
     }
 
+    .info {
+    margin-bottom: 1rem;
+    }
+
     h1 {
         font-size: 4rem;
     }
