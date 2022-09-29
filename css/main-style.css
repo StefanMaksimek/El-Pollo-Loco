@@ -15,8 +15,7 @@ body {
   flex-direction: column;
   justify-content: center;
   font-family: 'Boogaloo';
-  background: url('../img/new_items/desert-5112222.png') no-repeat center center
-    fixed;
+  background: url('../img/new_items/desert-5112222.png') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -106,7 +105,7 @@ h1 {
 
 .game-over {
   width: 100%;
-  padding: 2rem;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 0.2rem;
@@ -118,14 +117,20 @@ h1 {
 }
 
 .level {
-  margin: 1rem;
+  display: flex;
+}
+
+.level h2 {
+  margin-right: 1rem;
 }
 
 .points {
-  width: 50%;
-  margin: 3rem;
   display: flex;
   justify-content: space-around;
+}
+
+.points div {
+  margin-right: 1rem;
 }
 
 .info {
@@ -265,4 +270,16 @@ li.a:hover {
 .fullscreen img {
   width: 8%;
   opacity: 80%;
+}
+
+button {
+  border: none;
+  background-color: white;
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px 5px 2px rgb(0 0 0 / 30%);
+  padding: 1rem;
+}
+
+button:hover {
+  background-color: #f7c274;
 }

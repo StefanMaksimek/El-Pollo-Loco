@@ -10,9 +10,13 @@ let FPS = 60;
 let interval = 1000 / FPS;
 
 let intervalIds = []; // Arrey to stopp all intervalls
+let enemyIntervals = []; // Arrey for enemies. Use to start new level
+let characterIntervals = []; // Arrey for character
+let worldIntervals = [];
 
 let levelIndex = 1; // Integer for setting enemies in level
-let bgCounter = 7;
+let bgCounter = 4;
+let points = 0;
 
 /**
  * generate random number; for example use 0.1 to 3
@@ -35,5 +39,5 @@ function getRandomInt(max) {
 }
 
 function generateLevelsize() {
-  bgCounter = levelIndex * 2 + levelIndex;
+  bgCounter = 4 + levelIndex;
 }

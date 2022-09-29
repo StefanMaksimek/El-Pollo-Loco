@@ -14,10 +14,9 @@ class BottleBar extends DrawableObject {
    * width = 595 * scalefactor;
    * height = 158 * scalefactor;
    */
-
   width = 158 * scalefactor;
   height = 158 * scalefactor;
-  x = this.width + 80;
+  x = this.width + 120;
   y = this.height + 10;
 
   bottles = 0;

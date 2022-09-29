@@ -74,21 +74,19 @@
       <div class="start">
         <div class="start-img" id="start-img">
           <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="" />
-          <img
-            id="play-btn"
-            onclick="startGame()"
-            src="img/new_items/play_btn.png"
-            alt=""
-          />
+          <img id="play-btn" onclick="startGame()" src="img/new_items/play_btn.png" alt="" />
         </div>
 
         <canvas id="canvas" width="" height=""></canvas>
 
         <div class="game-over" id="game-over">
-          <h2>¿Qué sucedió? ¡Estuviste súper genial!</h2>
+          <h2 id="game-over-text">¿Qué sucedió? ¡Estuviste súper genial!</h2>
 
           <div class="level" id="level">
-            <h2>Level 1</h2>
+            <h2>
+              Level
+              <h2 id="level-index">$</h2>
+            </h2>
           </div>
 
           <div class="points">
@@ -96,24 +94,29 @@
               <h3>Punkte:</h3>
             </div>
             <div>
-              <h3 class="points-quantity" id="points-quantity">123456</h3>
+              <h3 class="points-quantity" id="points-quantity">$$$$$</h3>
+            </div>
+          </div>
+          <div class="points">
+            <div>
+              <h3>Gegrillte Hünchen:</h3>
+            </div>
+            <div>
+              <h3 class="points-quantity" id="killed-enemies">$$$$$</h3>
             </div>
           </div>
 
           <div class="announcement">
             <h2>
-              Weitere Level sind in Arbeit! <br />
-              Seite neu laden um Spiel zu wiederholen
+              <button id="next-level-btn" onclick="world.startNextLevel()">Nächstes Level</button>
             </h2>
           </div>
         </div>
 
         <div class="settings" id="settings">
           <h2>
-            Herausforderungen sind Chancen! Wachstum entsteht nicht, wenn du
-            immer am selben Fleck bleibst. Du brauchst regelmäßig neue
-            Herausforderungen, um deine Einstellung zu stärken und dich über
-            deine Erfolge zu freuen! <br /><br />
+            Herausforderungen sind Chancen! Wachstum entsteht nicht, wenn du immer am selben Fleck bleibst. Du brauchst regelmäßig neue Herausforderungen, um
+            deine Einstellung zu stärken und dich über deine Erfolge zu freuen! <br /><br />
             Lies das nochmal!
           </h2>
         </div>
@@ -122,10 +125,8 @@
           <h2>
             Wie nennt man mexikanische Musik? <br />
             <br />
-            Mariachi in der mexikanischen Kultur In Mexiko, vor allem im
-            zentralen Hochland, ist die Musik der Mariachi bis heute fester
-            Bestandteil der Volkskultur. Es gibt keinen Anlass, zu dem nicht
-            Mariachi aufspielen.
+            Mariachi in der mexikanischen Kultur In Mexiko, vor allem im zentralen Hochland, ist die Musik der Mariachi bis heute fester Bestandteil der
+            Volkskultur. Es gibt keinen Anlass, zu dem nicht Mariachi aufspielen.
           </h2>
         </div>
 
@@ -134,11 +135,7 @@
         </div>
 
         <div class="fullscreen" id="fullscreen">
-          <img
-            onclick="closeMobileFullscreen()"
-            src="img/new_items/exit_fullscreen.png"
-            alt=""
-          />
+          <img onclick="closeMobileFullscreen()" src="img/new_items/exit_fullscreen.png" alt="" />
         </div>
 
         <div class="mobile-control" id="mobile-control">

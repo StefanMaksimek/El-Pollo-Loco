@@ -54,12 +54,7 @@ class DrawableObject {
 
   drawCalculatedFrame(ctx) {
     ctx.beginPath();
-    ctx.rect(
-      this.x + this.setCollisionX,
-      this.y + this.setCollisionY,
-      this.width - this.setCollisionWidth,
-      this.height - this.setCollisionheigt
-    );
+    ctx.rect(this.x + this.setCollisionX, this.y + this.setCollisionY, this.width - this.setCollisionWidth, this.height - this.setCollisionheigt);
     ctx.lineWidth = 2;
     ctx.strokeStyle = 'red';
     ctx.stroke();
@@ -79,20 +74,17 @@ class DrawableObject {
 
   isColliding(mo) {
     let enemyYtop = mo.y + mo.setCollisionY;
-    let enemyYbottom =
-      mo.y + mo.setCollisionY + mo.height - mo.setCollisionheigt;
+    let enemyYbottom = mo.y + mo.setCollisionY + mo.height - mo.setCollisionheigt;
     let enemyXleft = mo.x + mo.setCollisionX;
     let enemyXright = mo.x + mo.setCollisionX + mo.width - mo.setCollisionWidth;
 
     let characterYtop = this.y + this.setCollisionY;
-    let characterYbottom =
-      this.y + this.setCollisionY + this.height - this.setCollisionheigt;
+    let characterYbottom = this.y + this.setCollisionY + this.height - this.setCollisionheigt;
     let characterXleft = this.x + this.setCollisionX;
-    let characterXright =
-      this.x + this.setCollisionX + this.width - this.setCollisionWidth;
+    let characterXright = this.x + this.setCollisionX + this.width - this.setCollisionWidth;
 
-    return (
-      /** 
+    return enemyXleft < characterXright && enemyXright > characterXleft && enemyYtop < characterYbottom && enemyYbottom > characterYtop;
+    /** 
       (characterXright > enemyXleft &&
         characterXright < enemyXright &&
         characterYbottom > enemyYtop &&
@@ -118,12 +110,6 @@ class DrawableObject {
         enemyXright > characterXleft &&
         enemyXright < characterXright) ||
 */
-
-      enemyXleft < characterXright &&
-      enemyXright > characterXleft &&
-      enemyYtop < characterYbottom &&
-      enemyYbottom > characterYtop
-    );
   }
 
   /** Is not working!!!

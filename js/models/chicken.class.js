@@ -4,10 +4,7 @@ class Chicken extends MovableObjekt {
 
   x = 1800 + getRandomArbitrary(0, canvasWidth * bgCounter - 3000);
   chickenWalkline = this.characterWalkline - 15 + this.characterWalkline;
-  gravityY =
-    canvasHeight -
-    this.height -
-    (this.walkLine + this.chickenWalkline) * scalefactor;
+  gravityY = canvasHeight - this.height - (this.walkLine + this.chickenWalkline) * scalefactor;
   y = this.gravityY;
 
   setCollisionX = 0 * scalefactor;
@@ -25,7 +22,7 @@ class Chicken extends MovableObjekt {
   otherDirection = false;
   id = Math.random();
 
-  energy = 10;
+  energy = 10 * levelIndex;
   damage = this.animationSpeed * 2;
   isDead = false;
   deadIndex = false;

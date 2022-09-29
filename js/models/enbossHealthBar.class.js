@@ -13,7 +13,7 @@ class EndbossHealthBar extends DrawableObject {
   x = canvasWidth - this.width - 10;
   y = 10;
 
-  maxEnergy = 500;
+  maxEnergy = 100;
   energy = 100;
 
   constructor() {

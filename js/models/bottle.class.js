@@ -1,8 +1,5 @@
 class Bottle extends DrawableObject {
-  IMAGES_BOTTLE = [
-    'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
-    'img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
-  ];
+  IMAGES_BOTTLE = ['img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'];
   sizefactor = 0.4;
   width = 400 * this.sizefactor;
   height = 400 * this.sizefactor;

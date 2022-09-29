@@ -7,10 +7,7 @@ class Character extends MovableObjekt {
 
   first_positionOfCharacter = canvasWidth / 4;
   x = this.first_positionOfCharacter;
-  gravityY =
-    canvasHeight -
-    this.height -
-    (this.walkLine + this.characterWalkline) * scalefactor;
+  gravityY = canvasHeight - this.height - (this.walkLine + this.characterWalkline) * scalefactor;
   y = this.gravityY;
 
   setCollisionX = 100 * scalefactor;
@@ -48,11 +45,7 @@ class Character extends MovableObjekt {
     'img/2_character_pepe/3_jump/J-38.png',
     'img/2_character_pepe/3_jump/J-39.png',
   ];
-  IMAGES_HURT = [
-    'img/2_character_pepe/4_hurt/H-41.png',
-    'img/2_character_pepe/4_hurt/H-42.png',
-    'img/2_character_pepe/4_hurt/H-43.png',
-  ];
+  IMAGES_HURT = ['img/2_character_pepe/4_hurt/H-41.png', 'img/2_character_pepe/4_hurt/H-42.png', 'img/2_character_pepe/4_hurt/H-43.png'];
   IMAGES_DEAD = [
     'img/2_character_pepe/5_dead/D-51.png',
     'img/2_character_pepe/5_dead/D-52.png',
@@ -109,36 +102,35 @@ class Character extends MovableObjekt {
   }
 
   setIntervals() {
-    setStoppableInterval(this.playAudio.bind(this), 100);
-    setStoppableInterval(this.setMove.bind(this), interval);
-    setStoppableInterval(this.setImages.bind(this), 150);
+    setCharacterInterval(this.playAudio.bind(this), 100);
+    setCharacterInterval(this.setMove.bind(this), interval);
+    setCharacterInterval(this.setImages.bind(this), 150);
   }
 
   playAudio() {
     this.SOUND_WALKING.pause();
-    if (
-      (this.proofRightWalking() || this.proofLeftWalking()) &&
-      this.y == this.gravityY
-    ) {
+    if ((this.proofRightWalking() || this.proofLeftWalking()) && this.y == this.gravityY) {
       this.SOUND_WALKING.play();
     }
   }
 
   setMove() {
-    if (this.proofRightWalking()) {
-      this.moveRight();
-      this.otherDirection = false;
+    if (play) {
+      if (this.proofRightWalking()) {
+        this.moveRight();
+        this.otherDirection = false;
+      }
+      if (this.proofLeftWalking()) {
+        this.moveLeft();
+        this.otherDirection = true;
+        1;
+      }
+      if (this.proofJump()) {
+        this.jump(this.jumpPower);
+        this.SOUND_JUMP.play();
+      }
+      this.cameraView();
     }
-    if (this.proofLeftWalking()) {
-      this.moveLeft();
-      this.otherDirection = true;
-      1;
-    }
-    if (this.proofJump()) {
-      this.jump(this.jumpPower);
-      this.SOUND_JUMP.play();
-    }
-    this.cameraView();
   }
 
   setImages() {
@@ -200,11 +192,7 @@ class Character extends MovableObjekt {
   }
 
   proofRightWalking() {
-    return (
-      keyboard.right &&
-      this.proofCanvasEndRight() &&
-      this.distanceToEndboss > 160
-    );
+    return keyboard.right && this.proofCanvasEndRight() && this.distanceToEndboss > 160;
   }
 
   proofLeftWalking() {
@@ -227,10 +215,7 @@ class Character extends MovableObjekt {
     if (this.x > -2 * canvasWidth + this.first_positionOfCharacter) {
       this.world.cameraX = this.first_positionOfCharacter - this.x;
     }
-    if (
-      this.x <
-      bgCounter * canvasWidth - canvasWidth + this.first_positionOfCharacter
-    ) {
+    if (this.x < bgCounter * canvasWidth - canvasWidth + this.first_positionOfCharacter) {
       this.world.cameraX = this.first_positionOfCharacter - this.x;
     }
   }

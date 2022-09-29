@@ -37,9 +37,7 @@ class ThrowableObject extends MovableObjekt {
   ];
 
   constructor(x, y, direction, walkLeft, walkRight) {
-    super().loadImage(
-      'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png'
-    );
+    super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
     this.x = x - this.width * 0.5;
     this.y = y;
     this.throw(direction, walkLeft, walkRight);

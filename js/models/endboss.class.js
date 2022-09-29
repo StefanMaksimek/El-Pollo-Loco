@@ -6,10 +6,7 @@ class Endboss extends MovableObjekt {
   x = this.startX;
 
   endbossWalkline = this.characterWalkline - 39 + this.characterWalkline;
-  gravityY =
-    canvasHeight -
-    this.height -
-    (this.walkLine + this.endbossWalkline) * scalefactor;
+  gravityY = canvasHeight - this.height - (this.walkLine + this.endbossWalkline) * scalefactor;
   y = this.gravityY;
 
   setCollisionX = 100 * scalefactor;
@@ -27,16 +24,12 @@ class Endboss extends MovableObjekt {
   hitCharacter = false;
   id = Math.random();
 
-  maxEnergy = 500 * levelIndex;
+  maxEnergy = 100 * levelIndex;
   energy = this.maxEnergy;
   damage = 30;
   isDead = false;
 
-  IMAGES_WALKING = [
-    'img/4_enemie_boss_chicken/1_walk/G1.png',
-    'img/4_enemie_boss_chicken/1_walk/G2.png',
-    'img/4_enemie_boss_chicken/1_walk/G3.png',
-  ];
+  IMAGES_WALKING = ['img/4_enemie_boss_chicken/1_walk/G1.png', 'img/4_enemie_boss_chicken/1_walk/G2.png', 'img/4_enemie_boss_chicken/1_walk/G3.png'];
   IMAGES_ALERT = [
     'img/4_enemie_boss_chicken/2_alert/G5.png',
     'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -57,16 +50,8 @@ class Endboss extends MovableObjekt {
     'img/4_enemie_boss_chicken/3_attack/G19.png',
     'img/4_enemie_boss_chicken/3_attack/G20.png',
   ];
-  IMAGES_HURT = [
-    'img/4_enemie_boss_chicken/4_hurt/G21.png',
-    'img/4_enemie_boss_chicken/4_hurt/G22.png',
-    'img/4_enemie_boss_chicken/4_hurt/G23.png',
-  ];
-  IMAGES_DEAD = [
-    'img/4_enemie_boss_chicken/5_dead/G24.png',
-    'img/4_enemie_boss_chicken/5_dead/G25.png',
-    'img/4_enemie_boss_chicken/5_dead/G26.png',
-  ];
+  IMAGES_HURT = ['img/4_enemie_boss_chicken/4_hurt/G21.png', 'img/4_enemie_boss_chicken/4_hurt/G22.png', 'img/4_enemie_boss_chicken/4_hurt/G23.png'];
+  IMAGES_DEAD = ['img/4_enemie_boss_chicken/5_dead/G24.png', 'img/4_enemie_boss_chicken/5_dead/G25.png', 'img/4_enemie_boss_chicken/5_dead/G26.png'];
 
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
@@ -95,10 +80,7 @@ class Endboss extends MovableObjekt {
           this.animationSpeed = levelIndex + 10;
           this.playAnimation(this.IMAGES_ATTACK);
         } else {
-          this.animationSpeed = getRandomArbitrary(
-            this.minSpeed,
-            this.maxSpeed
-          );
+          this.animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
           this.playAnimation(this.IMAGES_WALKING);
         }
       }

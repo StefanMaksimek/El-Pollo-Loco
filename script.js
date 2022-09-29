@@ -165,6 +165,7 @@ function closeRest() {
   document.getElementById('best-player').style.display = 'none';
   document.getElementById('music').style.display = 'none';
   document.getElementById('settings').style.display = 'none';
+  document.getElementById('game-over').style.display = 'none';
 }
 
 function reload() {
@@ -208,10 +209,33 @@ function fullscreenMobile() {
 function setStoppableInterval(fn, t) {
   let id = setInterval(fn, t);
   intervalIds.push(id);
+  enemyIntervals.push(id);
+}
+
+function setCharacterInterval(fn, t) {
+  let id = setInterval(fn, t);
+  intervalIds.push(id);
+  characterIntervals.push(id);
+}
+
+function setWorldInterval(fn, t) {
+  let id = setInterval(fn, t);
+  worldIntervals.push(id);
 }
 
 function stoppAllIntervalls() {
   intervalIds.forEach(clearInterval);
+  enemyIntervals.forEach(clearInterval);
+  worldIntervals.forEach(clearInterval);
+  characterIntervals.forEach(clearInterval);
+  intervalIds = [];
+  enemyIntervals = [];
+  worldIntervals = [];
+  characterIntervals = [];
+}
+
+function stoppEnemyIntervalls() {
+  enemyIntervals.forEach(clearInterval);
 }
 
 if (document.addEventListener) {
@@ -231,4 +255,9 @@ function exitHandler() {
   } else {
     return false;
   }
+}
+
+function nextLevel() {
+  world = [];
+  world.push(new World(canvas, keyboard));
 }

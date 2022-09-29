@@ -17,7 +17,7 @@ class MovableObjekt extends DrawableObject {
   deadTime = 0;
 
   proofAlive() {
-    setInterval(() => {
+    let id = setInterval(() => {
       if (this.energy > 0) {
         this.isDead = false;
       } else {
@@ -25,6 +25,7 @@ class MovableObjekt extends DrawableObject {
         this.deadTime++;
       }
     }, 10);
+    intervalIds.push(id);
   }
 
   proofCollidingTime() {
